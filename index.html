@@ -1452,10 +1452,10 @@ strong { color: var(--accent); }
 <script>
 // ══ Questions (will be shuffled) ══
 const ALL_QUESTIONS = [
-  { id:1, badge:'報告設定 ⑤', scenario:'60歲停經女性，來自印度，需做全身 DXA 檢查。',
+  { id:1, badge:'報告設定 ⑤', scenario:'60歲停經女性，來自美國（白人），需做全身 DXA 檢查。',
     text:'關於參考族群的設定，下列何者正確？', ans:'B', link:'section-setting5', linkText:'設定 ⑤ 參考族群',
-    opts:['直接使用亞洲族群即可','確認種族並更改參考族群為印度，做完後改回亞洲','改為美國白人 NHANES','不需更改，所有人種都用同一參考值'],
-    fb:'非亞洲人須改參考族群，<b>做完後改回亞洲</b>，避免影響後續病人。' },
+    opts:['直接使用亞洲族群即可','L spine 改為美國 Lunar、Hip 改為美國 NHANES/Lunar，做完後改回亞洲','只需改 Hip 為 NHANES 即可','不需更改，所有人種都用同一參考值'],
+    fb:'非亞洲人須依部位改參考族群：<b>L spine → 美國 Lunar</b>、<b>Hip → 美國 NHANES/Lunar</b>。做完後改回亞洲，避免影響後續病人。' },
 
   { id:2, badge:'報告設定 ⑦', scenario:'78歲停經女性，全身檢查後 L spine 因骨水泥全部排除。',
     text:'TBS 與 FRAX 應如何處理？', ans:'B', link:'section-setting7', linkText:'設定 ⑦ TBS + FRAX',
@@ -1478,7 +1478,7 @@ const ALL_QUESTIONS = [
     fb:'靜脈顯影劑需等 <b>2 天</b>。' },
 
   { id:6, badge:'擺位與執行 ④-b', scenario:'以下三張影像顯示不同程度的股骨內轉：',
-    images:[{src:'img/rot-a.png',cap:'A'},{src:'img/rot-b.png',cap:'B'},{src:'img/rot-c.png',cap:'C'}],
+    images:[{src:'img/hip-overturn.png',cap:'A'},{src:'img/hip-correct.png',cap:'B'},{src:'img/hip-underturn.png',cap:'C'}],
     text:'關於小轉子的判讀，下列何者正確？', ans:'C', link:'section-position-b', linkText:'擺位 ④-b Femur',
     opts:['A 剛好、B 內轉太多、C 內轉不足','A 內轉不足須重照、B 剛好、C 可接受','A 內轉太多須少轉、B 剛好、C 內轉不足須再內轉','三張都可以接受'],
     fb:'A 小轉子消失 = 內轉太多；B 隱約可見 = 正確；C 太明顯 = 內轉不足。'},
@@ -1496,7 +1496,13 @@ const ALL_QUESTIONS = [
   { id:9, badge:'報告設定 ⑥', scenario:'60歲病人，兩年前曾做骨密度全身檢查（L spine、R hip、L hip），今日再次回診。',
     text:'今日的骨密度報告應包含哪些項目？', ans:'C', link:'section-setting6', linkText:'設定 ⑥ Trending',
     opts:['只做 BMD 三部位即可','BMD 三部位 + Trending（L spine, Dual femur 頸）+ TBS + FRAX','BMD 三部位 + Trending（L spine, Dual femur total）+ TBS + FRAX','BMD 三部位 + TBS + FRAX（無需 trending，兩年才一次）'],
-    fb:'有前次資料時須做 trending。Dual femur 應選 <b>total（全部均值）</b>，非頸部（頸部僅用於診斷比較）。60歲符合 TBS + FRAX 條件。'}
+    fb:'有前次資料時須做 trending。Dual femur 應選 <b>total（全部均值）</b>，非頸部（頸部僅用於診斷比較）。60歲符合 TBS + FRAX 條件。'},
+
+  { id:10, badge:'擺位與執行 ④-a', scenario:'以下兩張影像顯示不同的 L-spine 擺位結果：',
+    images:[{src:'img/spine-correct.png',cap:'A'},{src:'img/spine-tilted.png',cap:'B'}],
+    text:'關於 L-spine 擺位的判讀，下列何者正確？', ans:'A', link:'section-position-a', linkText:'擺位 ④-a L Spine',
+    opts:['A 正確擺位、B 脊椎太斜須重照','A 脊椎太斜、B 正確擺位','兩張都可以接受','兩張都需要重照'],
+    fb:'A 脊椎置中且垂直 = 正確；B 脊椎明顯傾斜 = 擺位不正確，須重新調整後再掃描。'}
 ];
 
 const QUIZ_COUNT = 8;
