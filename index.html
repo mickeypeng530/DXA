@@ -1089,6 +1089,59 @@ strong { color: var(--accent); }
   flex-wrap: wrap;
   justify-content: flex-end;
 }
+
+/* ══ Back to Top Button ══ */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-top.visible {
+  opacity: 0.7;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Mobile: smaller button, avoid blocking content */
+@media (max-width: 640px) {
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    bottom: 16px;
+    right: 16px;
+    opacity: 0;
+  }
+  .back-to-top.visible {
+    opacity: 0.6;
+  }
+  .back-to-top:active {
+    opacity: 1;
+  }
+}
 </style>
 </head>
 <body data-theme="light" data-font="medium">
@@ -1123,8 +1176,8 @@ strong { color: var(--accent); }
 <!-- ══ Nav ══ -->
 <nav>
   <div class="nav-inner">
-    <button class="nav-tab active" onclick="go('quiz',this)">測驗</button>
-    <button class="nav-tab" onclick="go('teach',this)">教學</button>
+    <button class="nav-tab active" onclick="go('teach',this)">教學</button>
+    <button class="nav-tab" onclick="go('quiz',this)">測驗</button>
     <button class="nav-tab" onclick="go('extra',this)">附錄</button>
   </div>
 </nav>
@@ -1132,7 +1185,7 @@ strong { color: var(--accent); }
 <main>
 
 <!-- ════════════════ QUIZ ════════════════ -->
-<div id="pg-quiz" class="page active">
+<div id="pg-quiz" class="page">
 
   <!-- Intro -->
   <div id="quiz-intro" class="card quiz-intro">
@@ -1163,7 +1216,7 @@ strong { color: var(--accent); }
 </div>
 
 <!-- ════════════════ TEACH ════════════════ -->
-<div id="pg-teach" class="page">
+<div id="pg-teach" class="page active">
 
   <!-- Quick Nav -->
   <div class="quick-nav card">
@@ -1329,13 +1382,14 @@ strong { color: var(--accent); }
       <ol class="step-ol">
         <li>工具 → 用戶和選項</li>
         <li>目錄 → 參考資料</li>
-        <li>點選腰椎</li>
-        <li>參照群體選項</li>
-        <li>選擇欲變更的族群</li>
+        <li>點選<strong>「腰椎」</strong>→ 參照群體選項 → 選擇族群<br>
+          <span style="color:var(--accent);font-size:0.9em;">例：美國 (Lunar)</span></li>
+        <li>點選<strong>「股骨」</strong>→ 參照群體選項 → 選擇族群<br>
+          <span style="color:var(--accent);font-size:0.9em;">例：美國 (組合 NHANES/Lunar)</span></li>
         <li>關閉選項</li>
         <li>確認修改為目標族群</li>
         <li>按下確定</li>
-        <li><strong>做完記得改回亞洲！</strong></li>
+        <li><strong style="color:var(--wrong);">⚠ 做完記得改回亞洲！</strong></li>
       </ol>
     </div>
   </div>
@@ -1351,10 +1405,10 @@ strong { color: var(--accent); }
       <p style="font-weight:700;margin:14px 0 8px;">軟體操作步驟（GE Lunar）：</p>
       <ol class="step-ol">
         <li>勾選 trending 核取方塊</li>
-        <li>下拉選單</li>
-        <li>點選「報表」</li>
+        <li>點選「報表」下拉選單</li>
         <li>選「(trending DualFemur)(勾選趨勢)雙側股骨」<br>
           <span style="color:var(--wrong);font-weight:600;">⚠ 一定要按「趨勢」按鈕才有折線圖</span></li>
+        <li>下拉選單點選<strong>「全部 均值」</strong></li>
         <li>輸出「DualFemur: 全部 均值（骨密度）」</li>
       </ol>
     </div>
@@ -1733,7 +1787,7 @@ function jumpTo(id) {
 }
 
 function goTeach(id) {
-  go('teach', document.querySelectorAll('.nav-tab')[1]);
+  go('teach', document.querySelectorAll('.nav-tab')[0]);
   setTimeout(() => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
@@ -1778,7 +1832,25 @@ document.addEventListener('DOMContentLoaded', () => {
     setFont(savedFont);
   }
 });
+
+// ══ Back to Top Button ══
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="回到頂部">↑</button>
 
 </body>
 </html>
