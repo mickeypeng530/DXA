@@ -1559,7 +1559,7 @@ const ALL_QUESTIONS = [
     fb:'A 脊椎置中且垂直 = 正確；B 脊椎明顯傾斜 = 擺位不正確，須重新調整後再掃描。'}
 ];
 
-const QUIZ_COUNT = 8;
+const QUIZ_COUNT = ALL_QUESTIONS.length;
 const LETTERS = ['A','B','C','D'];
 
 let shuffledQuestions = [];
@@ -1579,8 +1579,8 @@ function shuffle(array) {
 
 // ══ Start Quiz ══
 function startQuiz() {
-  // Shuffle and pick QUIZ_COUNT questions
-  shuffledQuestions = shuffle(ALL_QUESTIONS).slice(0, QUIZ_COUNT);
+  // Shuffle all questions
+  shuffledQuestions = shuffle(ALL_QUESTIONS);
   results = new Array(QUIZ_COUNT).fill(null);
   userChoices = new Array(QUIZ_COUNT).fill(null);
   cur = 0;
