@@ -76,31 +76,54 @@
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
   
-  /* 標題縮小但可見 */
+  /* Header 強制單排不換行 */
+  .header-inner {
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    padding: 6px 10px !important;
+    gap: 6px !important;
+  }
+  
+  /* 標題縮小 */
   .site-title {
-    font-size: 14px;
+    font-size: 13px !important;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
   }
   
   .site-title::before {
-    width: 4px;
-    height: 16px;
+    width: 3px !important;
+    height: 14px !important;
+    flex-shrink: 0;
   }
   
-  /* 控制項縮小 */
+  /* 控制項不縮小 */
+  .controls {
+    flex-shrink: 0 !important;
+  }
+  
+  .font-controls {
+    padding: 2px !important;
+    gap: 1px !important;
+  }
+  
   .ctrl-btn {
-    padding: 4px 8px;
-    font-size: 11px;
+    padding: 3px 6px !important;
+    font-size: 10px !important;
   }
   
   .theme-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 13px !important;
+    margin-left: 3px !important;
   }
   
   /* Nav Tab 縮小 */
   .nav-tab {
-    padding: 10px 0;
+    padding: 8px 0;
     font-size: 13px;
   }
 }
@@ -145,27 +168,6 @@ header {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-}
-
-/* 手機版 Header 不換行 */
-@media screen and (max-width: 768px) {
-  .header-inner {
-    flex-wrap: nowrap !important;
-    padding: 8px 10px;
-    gap: 6px;
-  }
-  
-  /* 控制項不能縮小 */
-  .controls {
-    flex-shrink: 0;
-  }
-  
-  /* 標題可以縮小但有最小寬度 */
-  .site-title {
-    flex-shrink: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
 }
 
 .site-title {
@@ -1816,9 +1818,6 @@ function jumpToQuestion(idx) {
 // ══ Render question ══
 function renderQ(idx, shouldScroll = false) {
   cur = idx;
-  if (shouldScroll) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
   const q = shuffledQuestions[idx];
   const c = document.getElementById('q-container');
 
@@ -1923,7 +1922,13 @@ function pick(qIdx, optIdx) {
 
 function navQ(dir) {
   const next = cur + dir;
-  if (next >= 0 && next < QUIZ_COUNT) renderQ(next, true);
+  if (next >= 0 && next < QUIZ_COUNT) {
+    renderQ(next);
+    // 滾動到頂部 - 相容 iOS Safari
+    setTimeout(function() {
+      window.scrollTo(0, 0);
+    }, 50);
+  }
 }
 
 // ══ Summary ══
