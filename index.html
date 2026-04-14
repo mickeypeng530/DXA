@@ -1575,8 +1575,8 @@ function renderTeachPage() {
   });
   html += '</div></div>';
   
-  // 全部展開/收合按鈕
-  html += '<div class="toggle-all-container"><button class="toggle-all-btn" id="toggleAllBtn" onclick="toggleAllSections()">全部收合</button></div>';
+  // 展開/收合按鈕（兩個獨立按鈕）
+  html += '<div class="expand-controls"><button class="expand-btn" onclick="expandAll()">全部展開</button><button class="expand-btn" onclick="collapseAll()">全部收合</button></div>';
   
   // 教學區塊
   DATA.teachSections.forEach(section => {
@@ -1596,11 +1596,12 @@ function renderTeachPage() {
 // ══ 渲染測驗頁 ══
 function renderQuizPage() {
   const container = document.getElementById('pg-quiz');
-  let html = '<div class="card quiz-intro" id="quiz-intro">';
-  html += '<h2>📝 情境測驗</h2>';
-  html += '<p>共 ' + DATA.questions.length + ' 題情境題，測試你對 DXA 檢查流程的掌握程度</p>';
-  html += '<button class="start-btn" onclick="startQuiz()">開始測驗 →</button></div>';
+  let html = '<div id="quiz-intro" class="card quiz-intro">';
+  html += '<h2>DXA 操作實務測驗</h2>';
+  html += '<p>情境題測試，檢驗你的 DXA 操作判斷力</p>';
+  html += '<button class="start-btn" onclick="startQuiz()"><span>開始測驗</span><span>→</span></button></div>';
   html += '<div id="quiz-area" style="display:none;"></div>';
+  html += '<div id="quiz-summary" class="card summary" style="display:none;"></div>';
   container.innerHTML = html;
 }
 
@@ -1647,111 +1648,166 @@ function startQuiz() {
   quizStarted = true;
   document.getElementById('quiz-intro').style.display = 'none';
   document.getElementById('quiz-area').style.display = 'block';
-  buildDots();
+  
+  // 建立 quiz-area 的固定結構
+  const area = document.getElementById('quiz-area');
+  let html = '<div class="q-progress"><span id="qLabel">題目 1 / ' + shuffledQuestions.length + '</span><div class="progress-dots" id="dots">';
+  for (let i = 0; i < shuffledQuestions.length; i++) {
+    html += '<div class="dot' + (i === 0 ? ' current' : '') + '" id="dot-' + i + '" onclick="jumpToQ(' + i + ')"></div>';
+  }
+  html += '</div></div>';
+  html += '<div id="q-container"></div>';
+  html += '<div class="q-nav"><button class="q-nav-btn" id="prevBtn" onclick="navQ(-1)" disabled>← 上一題</button>';
+  html += '<button class="q-nav-btn primary" id="nextBtn" onclick="navQ(1)">下一題 →</button></div>';
+  area.innerHTML = html;
+  
   renderQ(0);
 }
 
-function buildDots() {
-  const area = document.getElementById('quiz-area');
-  let html = '<div class="quiz-progress"><span class="progress-label">進度</span><div class="progress-dots" id="dots">';
-  for (let i = 0; i < shuffledQuestions.length; i++) {
-    html += '<div class="dot' + (i === 0 ? ' current' : '') + '" id="dot-' + i + '" onclick="navQ(' + i + ')"></div>';
+function jumpToQ(idx) {
+  if (idx >= 0 && idx < shuffledQuestions.length) {
+    renderQ(idx);
   }
-  html += '</div></div><div id="q-container"></div>';
-  area.innerHTML = html;
 }
 
 function renderQ(idx) {
   cur = idx;
   const q = shuffledQuestions[idx];
   const answered = results[idx] !== null;
+  const QUIZ_COUNT = shuffledQuestions.length;
+  
   let html = '<div class="q-card"><div class="q-badge">' + q.badge + '</div>';
   html += '<div class="q-scenario">' + q.scenario + '</div>';
   
-  if (q.images) {
-    html += '<div class="img-row">';
-    q.images.forEach(img => { html += '<div class="img-box"><img src="' + img.src + '" alt="' + img.cap + '"><span>' + img.cap + '</span></div>'; });
-    html += '</div>';
-  }
   if (q.table) {
-    html += '<table class="mini-table"><tr><th>椎體</th><th>L2</th><th>L3</th><th>L4</th></tr><tr><td>T-score</td><td>0.3</td><td>−0.3</td><td>−1.3</td></tr></table>';
+    html += '<table class="mini-table"><tr><th>椎體</th><th>T-Score</th></tr>';
+    html += '<tr><td>L1</td><td>0.1</td></tr><tr><td>L2</td><td>0.3</td></tr>';
+    html += '<tr><td>L3</td><td>−0.3</td></tr><tr><td>L4</td><td>−1.3</td></tr></table>';
   }
   
-  html += '<div class="q-text">' + q.question + '</div><div class="q-options">';
+  if (q.images) {
+    html += '<div class="img-row">';
+    q.images.forEach(img => {
+      html += '<div class="img-box"><img src="' + img.src + '" alt="' + img.cap + '"><div class="cap">' + img.cap + '</div></div>';
+    });
+    html += '</div>';
+  }
+  
+  html += '<div class="q-text">' + q.question + '</div><div class="opts" id="opts">';
+  
+  const ansIdx = LETTERS.indexOf(q.answer);
   q.options.forEach((opt, i) => {
-    let cls = 'opt-btn';
+    let cls = 'opt';
     if (answered) {
-      if (LETTERS[i] === q.answer) cls += ' correct';
-      else if (userChoices[idx] === i) cls += ' wrong';
+      cls += ' locked';
+      if (i === ansIdx) cls += ' is-correct';
+      else if (results[idx] === false && i === userChoices[idx]) cls += ' is-wrong';
     }
-    html += '<button class="' + cls + '" onclick="pick(' + i + ')" ' + (answered ? 'disabled' : '') + '>';
-    html += '<span class="opt-letter">' + LETTERS[i] + '</span><span class="opt-text">' + opt + '</span></button>';
+    html += '<button class="' + cls + '" ' + (answered ? 'disabled' : '') + ' onclick="pick(' + idx + ',' + i + ')">';
+    html += '<span class="letter">' + LETTERS[i] + '</span><span>' + opt + '</span></button>';
   });
   html += '</div>';
   
+  // Feedback
   if (answered) {
-    const isCorrect = results[idx];
-    html += '<div class="q-feedback ' + (isCorrect ? 'correct' : 'wrong') + '">';
-    html += '<div class="fb-header"><span class="fb-icon ' + (isCorrect ? 'fb-correct' : 'fb-wrong') + '">' + (isCorrect ? '✓' : '✗') + '</span>';
-    html += '<span>' + (isCorrect ? '答對了！' : '答錯了') + '</span></div>';
-    html += '<div class="fb-text">' + q.feedback + '</div>';
-    html += '<button class="fb-link" onclick="goTeach(\'' + q.link + '\')">📖 前往教學：' + q.linkText + '</button></div>';
+    const ok = results[idx];
+    html += '<div class="fb show ' + (ok ? 'ok' : 'nope') + '">' + q.feedback + '<br>';
+    html += '<a class="go-link" href="#" onclick="goTeach(\'' + q.link + '\');return false;">📖 ' + q.linkText + '</a>';
+    if (idx < QUIZ_COUNT - 1) {
+      html += '<button class="skip-btn" onclick="navQ(1)">下一題 →</button>';
+    }
+    html += '</div>';
   }
   
-  html += '<div class="q-nav" id="q-nav-buttons">';
-  html += '<button class="q-nav-btn secondary" onclick="navQ(' + (idx - 1) + ')" ' + (idx === 0 ? 'disabled' : '') + '>← 上一題</button>';
-  if (idx === shuffledQuestions.length - 1 && answered) {
-    html += '<button class="q-nav-btn primary" onclick="showSummary()">查看結果</button>';
-  } else {
-    html += '<button class="q-nav-btn primary" onclick="navQ(' + (idx + 1) + ')" ' + (idx === shuffledQuestions.length - 1 ? 'disabled' : '') + '>下一題 →</button>';
-  }
-  html += '</div></div>';
+  html += '</div>';
   document.getElementById('q-container').innerHTML = html;
-  updateDots();
-}
-
-function pick(choice) {
-  if (results[cur] !== null) return;
-  const q = shuffledQuestions[cur];
-  results[cur] = LETTERS[choice] === q.answer;
-  userChoices[cur] = choice;
-  renderQ(cur);
-  setTimeout(() => {
-    const navBtns = document.getElementById('q-nav-buttons');
-    if (navBtns) navBtns.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
-}
-
-function navQ(idx) {
-  if (idx < 0 || idx >= shuffledQuestions.length) return;
-  renderQ(idx);
-  window.scrollTo(0, 0);
-}
-
-function updateDots() {
-  for (let i = 0; i < shuffledQuestions.length; i++) {
+  
+  // Update label & dots
+  document.getElementById('qLabel').textContent = '題目 ' + (idx + 1) + ' / ' + QUIZ_COUNT;
+  for (let i = 0; i < QUIZ_COUNT; i++) {
     const dot = document.getElementById('dot-' + i);
     dot.className = 'dot';
-    if (i === cur) dot.classList.add('current');
+    if (i === idx) dot.classList.add('current');
     if (results[i] === true) dot.classList.add('done-correct');
     else if (results[i] === false) dot.classList.add('done-wrong');
+  }
+  
+  // Nav buttons
+  document.getElementById('prevBtn').disabled = (idx === 0);
+  const nBtn = document.getElementById('nextBtn');
+  if (idx === QUIZ_COUNT - 1 && results.every(r => r !== null)) {
+    nBtn.textContent = '查看結果';
+    nBtn.onclick = function() { showSummary(); };
+    nBtn.disabled = false;
+  } else {
+    nBtn.textContent = '下一題 →';
+    nBtn.onclick = function() { navQ(1); };
+    nBtn.disabled = (idx === QUIZ_COUNT - 1);
+  }
+}
+
+function pick(qIdx, optIdx) {
+  if (results[qIdx] !== null) return;
+  const q = shuffledQuestions[qIdx];
+  const ansIdx = LETTERS.indexOf(q.answer);
+  userChoices[qIdx] = optIdx;
+  results[qIdx] = (optIdx === ansIdx);
+  renderQ(qIdx);
+  
+  // 滾動到下一題按鈕可見
+  setTimeout(function() {
+    const nBtn = document.getElementById('nextBtn');
+    if (nBtn) nBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
+  
+  // Check if all answered on last question
+  const QUIZ_COUNT = shuffledQuestions.length;
+  if (qIdx === QUIZ_COUNT - 1 && results.every(r => r !== null)) {
+    const nBtn = document.getElementById('nextBtn');
+    nBtn.textContent = '查看結果';
+    nBtn.disabled = false;
+    nBtn.onclick = function() { showSummary(); };
+  }
+}
+
+function navQ(dir) {
+  const next = cur + dir;
+  const QUIZ_COUNT = shuffledQuestions.length;
+  if (next >= 0 && next < QUIZ_COUNT) {
+    renderQ(next);
+    setTimeout(function() { window.scrollTo(0, 0); }, 50);
   }
 }
 
 function showSummary() {
   const correct = results.filter(r => r === true).length;
   const total = shuffledQuestions.length;
-  const pct = Math.round(correct / total * 100);
-  let msg = pct >= 80 ? '太厲害了！🎉' : pct >= 60 ? '表現不錯！' : '再接再厲！';
-  let html = '<div class="card summary"><div class="summary-score">' + correct + ' / ' + total + '</div>';
-  html += '<div class="summary-msg">' + msg + '</div><div class="summary-list">';
-  shuffledQuestions.forEach((q, i) => {
-    html += '<div class="summary-item" onclick="navQ(' + i + ')"><span class="summary-icon ' + (results[i] ? 'correct' : 'wrong') + '">' + (results[i] ? '✓' : '✗') + '</span>';
-    html += '<span class="summary-text">Q' + (i + 1) + '. ' + q.badge + '</span></div>';
-  });
-  html += '</div><button class="restart-btn" onclick="showConfirm()">🔄 重新測驗</button></div>';
-  document.getElementById('q-container').innerHTML = html;
-  document.getElementById('dots').parentElement.style.display = 'none';
+  const pct = correct / total;
+  const msgs = ['加油！建議複習教學內容','還可以，再練習幾次！','不錯！','很好！','太厲害了！滿分！'];
+  const mi = pct <= 0.5 ? 0 : pct <= 0.625 ? 1 : pct <= 0.75 ? 2 : pct < 1 ? 3 : 4;
+  
+  let html = '<h3>測驗完成</h3>';
+  html += '<div class="score-circle"><div><span class="num">' + correct + '</span><span class="den"> / ' + total + '</span></div></div>';
+  html += '<div class="msg">' + msgs[mi] + '</div>';
+  
+  const wrongs = results.map((r,i) => r === false ? i : -1).filter(i => i >= 0);
+  if (wrongs.length > 0) {
+    html += '<div class="wrong-review"><h4>答錯的題目：</h4>';
+    wrongs.forEach(i => {
+      const q = shuffledQuestions[i];
+      html += '<div class="wr-item"><span style="color:var(--wrong);">✗</span><span>Q' + (i+1) + ' ' + q.badge + '</span>';
+      html += '<a href="#" onclick="goTeach(\'' + q.link + '\');return false;">複習</a></div>';
+    });
+    html += '</div>';
+  }
+  
+  html += '<button class="start-btn" style="margin-top:24px;" onclick="showConfirm()">重新作答</button>';
+  
+  document.getElementById('quiz-area').style.display = 'none';
+  const s = document.getElementById('quiz-summary');
+  s.innerHTML = html;
+  s.style.display = 'block';
+  s.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 // ══ 教學頁功能 ══
@@ -1785,21 +1841,17 @@ function collapseSection(group) {
   document.getElementById('section-' + group).classList.add('collapsed');
 }
 
-function toggleAllSections() {
-  const allCollapsed = document.querySelectorAll('.teach-section.collapsed').length === DATA.teachSections.length;
-  DATA.teachSections.forEach(s => { if (allCollapsed) expandSection(s.group); else collapseSection(s.group); });
-  updateToggleAllBtn();
+function expandAll() {
+  DATA.teachSections.forEach(s => expandSection(s.group));
 }
 
-function updateToggleAllBtn() {
-  const btn = document.getElementById('toggleAllBtn');
-  btn.textContent = document.querySelectorAll('.teach-section.collapsed').length === DATA.teachSections.length ? '全部展開' : '全部收合';
+function collapseAll() {
+  DATA.teachSections.forEach(s => collapseSection(s.group));
 }
 
 function initTeachSections() {
   const isMobile = window.innerWidth <= 768;
   DATA.teachSections.forEach(s => { if (isMobile) collapseSection(s.group); else expandSection(s.group); });
-  updateToggleAllBtn();
 }
 
 function goTeach(sectionId) {
@@ -1844,6 +1896,7 @@ function showConfirm() { document.getElementById('confirmOverlay').classList.add
 function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('show'); }
 function confirmReset() {
   closeConfirm();
+  document.getElementById('quiz-summary').style.display = 'none';
   document.getElementById('quiz-intro').style.display = 'block';
   document.getElementById('quiz-area').style.display = 'none';
   quizStarted = false;
