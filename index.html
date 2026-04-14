@@ -108,7 +108,11 @@
 /* ══ Reset ══ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html { 
+  scroll-behavior: smooth;
+  /* iOS Safari sticky fix */
+  height: 100%;
+}
 
 body {
   font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -118,12 +122,14 @@ body {
   line-height: 1.7;
   transition: background 0.3s, color 0.3s;
   min-height: 100vh;
+  /* iOS Safari sticky fix - 不要設 overflow */
 }
 
 /* ══ Header ══ */
 header {
   background: var(--card);
   border-bottom: 1px solid var(--border);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -142,11 +148,23 @@ header {
 }
 
 /* 手機版 Header 不換行 */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .header-inner {
-    flex-wrap: nowrap;
-    padding: 8px 12px;
-    gap: 8px;
+    flex-wrap: nowrap !important;
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  
+  /* 控制項不能縮小 */
+  .controls {
+    flex-shrink: 0;
+  }
+  
+  /* 標題可以縮小但有最小寬度 */
+  .site-title {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
   }
 }
 
@@ -233,6 +251,7 @@ header {
 nav {
   background: var(--card);
   border-bottom: 1px solid var(--border);
+  position: -webkit-sticky;
   position: sticky;
   top: var(--header-height);
   z-index: 99;
@@ -1279,7 +1298,10 @@ strong { color: var(--accent); }
     font-size: 13px;
   }
   .back-to-quiz.visible {
-    opacity: 0.85;
+    opacity: 0.5;
+  }
+  .back-to-quiz:active {
+    opacity: 0.9;
   }
 }
 </style>
