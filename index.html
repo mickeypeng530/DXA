@@ -78,28 +78,33 @@
   
   /* Mobile: Header 單排 */
   .header-inner {
-    padding: 8px 12px;
-    flex-wrap: nowrap;
+    padding: 6px 10px !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
   }
   .site-title {
-    font-size: 15px;
+    font-size: 14px !important;
+    white-space: nowrap;
   }
   .site-title::before {
-    width: 4px;
-    height: 18px;
+    width: 3px;
+    height: 16px;
+    min-width: 3px;
   }
   .font-controls {
     padding: 2px;
+    gap: 1px;
   }
   .ctrl-btn {
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 4px 6px;
+    font-size: 11px;
   }
   .theme-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-    margin-left: 4px;
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+    margin-left: 2px;
+    min-width: 28px;
   }
   
   /* Mobile: Nav 縮小 */
@@ -831,6 +836,13 @@ main {
   align-items: center;
   gap: 12px;
   scroll-margin-top: 120px;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+.teach-group-title:hover {
+  opacity: 0.8;
 }
 
 .teach-group-title .circ {
@@ -846,6 +858,54 @@ main {
   font-weight: 800;
   flex-shrink: 0;
   box-shadow: var(--shadow2);
+}
+
+.teach-group-title .toggle-arrow {
+  margin-left: auto;
+  font-size: 0.8em;
+  transition: transform 0.3s;
+}
+
+.teach-group-title.collapsed .toggle-arrow {
+  transform: rotate(-90deg);
+}
+
+/* Teach Section Collapsible */
+.teach-section {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  max-height: 3000px;
+  opacity: 1;
+}
+
+.teach-section.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Expand/Collapse All Buttons */
+.expand-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.expand-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text2);
+  border-radius: 8px;
+  font-size: calc(var(--font-size) * 0.85);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.expand-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .teach-card {
@@ -1302,26 +1362,33 @@ strong { color: var(--accent); }
   <div class="quick-nav card">
     <div class="qn-label">快速跳轉</div>
     <div class="qn-group">
-      <span class="qn-cat" onclick="jumpTo('group-order')">一 接單決策</span>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order1');return false;">① 年齡/經期</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order2');return false;">② 參考族群</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order3');return false;">③ 單/多部位</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order4');return false;">④ 部位選擇</a>
+      <span class="qn-cat" onclick="jumpToSection('group-order')">一 接單決策</span>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-order1');return false;">① 年齡/經期</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-order2');return false;">② 參考族群</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-order3');return false;">③ 單/多部位</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-order4');return false;">④ 部位選擇</a>
     </div>
     <div class="qn-group">
-      <span class="qn-cat" onclick="jumpTo('group-position')">二 擺位與執行</span>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-a');return false;">⑤-a L Spine</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-b');return false;">⑤-b Femur</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-c');return false;">⑤-c 排程禁忌</a>
+      <span class="qn-cat" onclick="jumpToSection('group-position')">二 擺位與執行</span>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-position-a');return false;">⑤-a L Spine</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-position-b');return false;">⑤-b Femur</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-position-c');return false;">⑤-c 排程禁忌</a>
     </div>
     <div class="qn-group">
-      <span class="qn-cat" onclick="jumpTo('group-setting')">三 報告設定</span>
-      <a class="qn-link" href="#" onclick="jumpTo('section-setting6');return false;">⑥ Trending</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-setting7');return false;">⑦ TBS + FRAX</a>
+      <span class="qn-cat" onclick="jumpToSection('group-setting')">三 報告設定</span>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-setting6');return false;">⑥ Trending</a>
+      <a class="qn-link" href="#" onclick="jumpToSection('section-setting7');return false;">⑦ TBS + FRAX</a>
     </div>
   </div>
 
-  <div class="teach-group-title" id="group-order"><span class="circ">一</span>接單決策</div>
+  <!-- Expand/Collapse Controls -->
+  <div class="expand-controls">
+    <button class="expand-btn" onclick="expandAll()">全部展開</button>
+    <button class="expand-btn" onclick="collapseAll()">全部收合</button>
+  </div>
+
+  <div class="teach-group-title" id="group-order" onclick="toggleSection('order')"><span class="circ">一</span>接單決策<span class="toggle-arrow">▼</span></div>
+  <div class="teach-section" id="section-order">
 
   <div class="teach-card" id="section-order1">
     <div class="teach-card-head">① 確認年齡 / 經期 → 決定做法</div>
@@ -1418,8 +1485,10 @@ strong { color: var(--accent); }
       <ul><li>手術（關節置換）</li></ul>
     </div>
   </div>
+  </div><!-- end section-order -->
 
-  <div class="teach-group-title" id="group-position"><span class="circ">二</span>擺位與執行</div>
+  <div class="teach-group-title" id="group-position" onclick="toggleSection('position')"><span class="circ">二</span>擺位與執行<span class="toggle-arrow">▼</span></div>
+  <div class="teach-section" id="section-position">
 
   <div class="teach-card" id="section-position-a">
     <div class="teach-card-head">⑤-a L Spine 擺位</div>
@@ -1471,8 +1540,10 @@ strong { color: var(--accent); }
       </div>
     </div>
   </div>
+  </div><!-- end section-position -->
 
-  <div class="teach-group-title" id="group-setting"><span class="circ">三</span>報告設定</div>
+  <div class="teach-group-title" id="group-setting" onclick="toggleSection('setting')"><span class="circ">三</span>報告設定<span class="toggle-arrow">▼</span></div>
+  <div class="teach-section" id="section-setting">
 
   <div class="teach-card" id="section-setting6">
     <div class="teach-card-head">⑥ Trending</div>
@@ -1516,10 +1587,11 @@ strong { color: var(--accent); }
         <li>類固醇（≥3個月，≥5mg/day）</li>
         <li>類風濕性關節炎</li>
         <li>每日飲酒 ≥ 3 單位</li>
-        <li><strong>續發性骨鬆</strong>：第一型糖尿病、甲狀腺亢進、早發停經（&lt;45歲）、慢性肝病、吸收不良</li>
+        <li><strong>續發性骨鬆</strong>：糖尿病、甲狀腺亢進、早發停經（&lt;45歲）、慢性肝病、吸收不良</li>
       </ul>
     </div>
   </div>
+  </div><!-- end section-setting -->
 
 </div>
 
@@ -1597,7 +1669,7 @@ strong { color: var(--accent); }
       若患者有以下疾病，選擇<strong>「是」</strong>：
     </div>
     <ul style="margin-top:10px;">
-      <li><strong>第一型糖尿病</strong>（胰島素依賴型）</li>
+      <li><strong>糖尿病</strong>（尤其胰島素依賴型）</li>
       <li><strong>成骨不全症</strong>（Osteogenesis Imperfecta）</li>
       <li><strong>長期未治療的甲狀腺機能亢進</strong></li>
       <li><strong>性腺功能低下症</strong></li>
@@ -1896,9 +1968,88 @@ function jumpTo(id) {
   }
 }
 
+// ══ Teach Section Collapse/Expand ══
+function toggleSection(name) {
+  const title = document.getElementById('group-' + name);
+  const section = document.getElementById('section-' + name);
+  if (title && section) {
+    title.classList.toggle('collapsed');
+    section.classList.toggle('collapsed');
+  }
+}
+
+function expandSection(name) {
+  const title = document.getElementById('group-' + name);
+  const section = document.getElementById('section-' + name);
+  if (title && section) {
+    title.classList.remove('collapsed');
+    section.classList.remove('collapsed');
+  }
+}
+
+function collapseSection(name) {
+  const title = document.getElementById('group-' + name);
+  const section = document.getElementById('section-' + name);
+  if (title && section) {
+    title.classList.add('collapsed');
+    section.classList.add('collapsed');
+  }
+}
+
+function expandAll() {
+  ['order', 'position', 'setting'].forEach(expandSection);
+}
+
+function collapseAll() {
+  ['order', 'position', 'setting'].forEach(collapseSection);
+}
+
+// Jump to section and expand if collapsed
+function jumpToSection(id) {
+  // Determine which section contains this element
+  let sectionName = null;
+  if (id.includes('order')) sectionName = 'order';
+  else if (id.includes('position')) sectionName = 'position';
+  else if (id.includes('setting')) sectionName = 'setting';
+  
+  // Expand the section first
+  if (sectionName) {
+    expandSection(sectionName);
+  }
+  
+  // Then scroll to the element
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+// Initialize: collapse all on mobile, expand all on desktop
+function initTeachSections() {
+  if (window.innerWidth <= 640) {
+    collapseAll();
+  } else {
+    expandAll();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initTeachSections);
+
 function goTeach(id) {
   showBackToQuiz(cur);
   go('teach', document.querySelectorAll('.nav-tab')[0]);
+  
+  // Determine which section contains this element
+  let sectionName = null;
+  if (id.includes('order')) sectionName = 'order';
+  else if (id.includes('position')) sectionName = 'position';
+  else if (id.includes('setting')) sectionName = 'setting';
+  
+  // Expand the section first
+  if (sectionName) {
+    expandSection(sectionName);
+  }
+  
   setTimeout(() => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
