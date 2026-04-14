@@ -69,55 +69,65 @@
 
 @media (max-width: 768px) {
   :root {
-    --header-height: 48px;
-    --nav-height: 40px;
+    --header-height: 44px;
+    --nav-height: 36px;
   }
   [data-font="small"]  { --font-size: 14px; }
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
   
   /* Mobile: Header 單排 - 強制不換行 */
-  header .header-inner {
+  body header .header-inner {
     padding: 6px 10px;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     gap: 4px;
+    max-height: 44px;
   }
-  header .site-title {
-    font-size: 13px;
+  body header .header-inner .site-title {
+    font-size: 12px !important;
     white-space: nowrap;
     flex-shrink: 1;
     min-width: 0;
     overflow: hidden;
+    gap: 4px;
   }
-  header .site-title::before {
-    width: 3px;
-    height: 14px;
+  body header .header-inner .site-title::before {
+    width: 3px !important;
+    height: 14px !important;
     min-width: 3px;
     flex-shrink: 0;
   }
-  header .controls {
+  body header .header-inner .controls {
     flex-shrink: 0;
   }
-  header .font-controls {
-    padding: 2px;
+  body header .header-inner .font-controls {
+    padding: 1px;
     gap: 0;
   }
-  header .ctrl-btn {
-    padding: 3px 5px;
-    font-size: 10px;
+  body header .header-inner .ctrl-btn {
+    padding: 2px 4px;
+    font-size: 9px;
+    min-width: 18px;
   }
-  header .theme-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 12px;
+  body header .header-inner .theme-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
     margin-left: 2px;
-    min-width: 26px;
+    min-width: 24px;
+    padding: 0;
   }
   
-  /* Mobile: Nav 縮小 */
-  .nav-tab {
-    padding: 8px 0;
-    font-size: 13px;
+  /* Mobile: Nav 縮小高度 */
+  nav {
+    top: 44px; /* match header height */
+  }
+  nav .nav-inner {
+    padding: 0 4px;
+  }
+  nav .nav-tab {
+    padding: 6px 0;
+    font-size: 12px;
   }
 }
 
@@ -1890,6 +1900,12 @@ function pick(qIdx, optIdx) {
   userChoices[qIdx] = optIdx;
   results[qIdx] = (optIdx === ansIdx);
   renderQ(qIdx);
+
+  // 滾動到下一題按鈕可見
+  setTimeout(() => {
+    const nBtn = document.getElementById('nextBtn');
+    if (nBtn) nBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 
   // Check if all answered on last question
   if (qIdx === QUIZ_COUNT - 1 && results.every(r => r !== null)) {
