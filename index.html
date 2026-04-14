@@ -14,61 +14,58 @@
 <script id="app-data" type="application/json">
 {
   "cheatsheet": [
-    {"title": "接單判斷", "items": ["停經／亂經／男≥50 → 全身 + TBS + FRAX（T-score）", "未停經／男<50 → 全身（Z-score）", "90歲以上不做 TBS+FRAX"]},
-    {"title": "參考族群", "items": ["依種族國籍調整", "例：L-spine 美國白人（Lunar）、Hip 美國白人（NHANES/Lunar）"]},
-    {"title": "排除與加作", "items": ["L-spine：骨水泥／壓迫變形／金屬 → 排除該節", "Hip：置換術後 → 排除", "不滿兩部位 → 加做非慣用手前臂"]},
-    {"title": "擺位口訣", "items": ["L-spine：中線對齊、T12-IC、≥2節可判讀", "Hip：內轉15°、小轉子隱約可見"]},
-    {"title": "報告必做", "items": ["Trending：Dual Femur 全部均值", "TBS + FRAX：停經女／男≥50", "L-spine 全排除 → 只做 FRAX", "雙側 Hip 術後 → 只做 TBS"]}
-  ],
-  "quickNav": [
-    {"group": "order", "groupNum": "一", "groupTitle": "接單決策", "links": [{"id": "order1", "label": "① 年齡/經期"}, {"id": "order2", "label": "② 參考族群"}, {"id": "order3", "label": "③ 單/多部位"}, {"id": "order4", "label": "④ 部位選擇"}]},
-    {"group": "position", "groupNum": "二", "groupTitle": "擺位執行", "links": [{"id": "position-a", "label": "⑤-a 腰椎"}, {"id": "position-b", "label": "⑤-b 股骨"}, {"id": "position-c", "label": "⑤-c 排程禁忌"}]},
-    {"group": "setting", "groupNum": "三", "groupTitle": "報告設定", "links": [{"id": "setting6", "label": "⑥ Trending"}, {"id": "setting7", "label": "⑦ TBS+FRAX"}]}
+    {"title": "檢查前", "items": ["排程禁忌：顯影劑 2 天、核醫 48-72 hr、鋇劑/I-131 一週", "停經／亂經／男≥50 → 全身 + TBS + FRAX（T-score）", "未停經／男<50 → 全身（Z-score）", "90歲以上不做 TBS+FRAX"]},
+    {"title": "檢查中", "items": ["L-spine：中線對齊、T12-IC、≥2節可判讀", "Hip：內轉15°、小轉子隱約可見"]},
+    {"title": "檢查後", "items": ["排除：L-spine 骨水泥/變形/金屬、Hip 置換術後", "不滿兩部位 → 加做非慣用手前臂", "Trending：Dual Femur 全部均值", "TBS + FRAX：停（亂）經女／男≥50", "傳輸順序：骨密影像 → Trending → TBS+FRAX → VFA"]}
   ],
   "teachSections": [
     {
-      "group": "order", "groupNum": "一", "groupTitle": "接單決策",
+      "group": "pre", "groupNum": "一", "groupTitle": "檢查前",
       "cards": [
-        {"id": "order1", "title": "① 確認年齡 / 經期 → 決定做法", "content": "<table><tr><th>條件</th><th>做法</th><th>Score</th></tr><tr><td>男性 ≥ 50歲</td><td>全身 + TBS + FRAX</td><td>T</td></tr><tr><td>女性 停經 / 亂經</td><td>全身 + TBS + FRAX</td><td>T</td></tr><tr><td>男性 &lt; 50歲</td><td>全身</td><td>Z</td></tr><tr><td>女性 未停經</td><td>全身</td><td>Z</td></tr><tr><td>單部位開單</td><td>只做單部位</td><td>依上方</td></tr></table><div class=\"info-box blue\"><strong>女性亂經 = 視為停經</strong>（ISCD：停經過渡期可使用 T-Score）<br>若女性 &gt; 55歲但說未停經 → <strong>寫對話確認</strong></div><ul><li><strong>90歲以上不做</strong> TBS+FRAX</li></ul>"},
-        {"id": "order2", "title": "② 參考族群", "content": "<table><tr><th>Score</th><th>參考族群</th></tr><tr><td>T-Score</td><td>美國白人（NHANES/Lunar）</td></tr><tr><td>Z-Score</td><td>地區資料庫（亞洲）</td></tr></table><div class=\"info-box amber\" style=\"margin-top:12px;\">非亞洲人種 → <strong>確認種族、修改參考族群</strong><br>做完<strong>一定要改回亞洲！</strong>勿改成美國、中國</div><p style=\"font-weight:700;margin:14px 0 8px;\">軟體操作步驟（GE Lunar）：</p><ol class=\"step-ol\"><li>工具 → 用戶和選項</li><li>目錄 → 參考資料</li><li>點選<strong>「腰椎」</strong>→ 參照群體選項 → 選擇族群<br><span style=\"color:var(--accent);font-size:0.9em;\">例：美國 (Lunar)</span></li><li>點選<strong>「股骨」</strong>→ 參照群體選項 → 選擇族群<br><span style=\"color:var(--accent);font-size:0.9em;\">例：美國 (組合 NHANES/Lunar)</span></li><li>關閉選項</li><li>確認修改為目標族群</li><li>按下確定</li><li><strong style=\"color:var(--wrong);\">⚠ 做完記得改回亞洲！</strong></li></ol>"},
-        {"id": "order3", "title": "③ 單 / 多部位", "content": "<div class=\"info-box amber\"><strong>健保單皆為單部位醫令</strong>，一次僅能申報一筆<br>收到兩張健保單 → 擇一部位施做（hip 優先）<br>兩筆健保單申報時間需間隔至少 <strong>兩年</strong></div><ul><li><strong>全身檢查</strong>（醫令 304-109）：常規三部位（腰椎 + 兩側髖部）</li><li>可不用補滿三部位，但須<strong>至少兩個有效部位</strong></li></ul>"},
-        {"id": "order4", "title": "④ 部位選擇與加作規則", "content": "<p style=\"font-weight:700;margin-bottom:8px;\">加作前臂的條件：</p><table><tr><th>情況</th><th>處理</th></tr><tr><td>三部位有<strong>一個</strong>不能分析</td><td>不需加作</td></tr><tr><td><strong>兩個部位無法有效分析</strong></td><td>加做非慣用手</td></tr><tr><td>不確定是否需加作</td><td>就加作</td></tr><tr><td><strong>副甲狀腺亢進</strong></td><td><strong>直接</strong>加做 forearm</td></tr><tr><td><strong>洗腎病人</strong></td><td><strong>直接</strong>加做 forearm</td></tr><tr><td>兩側髖關節置換術</td><td>L-spine + 非慣用手 forearm</td></tr></table><div class=\"info-box blue\" style=\"margin-top:14px;\"><strong>Forearm：</strong>非慣用手（Radius 33%），通常左手<br>若不能執行 → 寫對話註記｜洗腎廔管<strong>可做</strong>但寫對話</div><p style=\"font-weight:700;margin:16px 0 8px;\">L Spine 排除條件：</p><div class=\"info-box amber\">Scan Check 出現時：<strong>先確認「相鄰兩節椎體 T 值差異 &gt; 1.0」再做排除</strong><br><strong>= 1.0 不用排除</strong>，要 &gt; 1.0 才排除</div><ul><li>骨水泥、骨釘</li><li>骨折、結構異常</li><li>若只剩一節可判讀 → 使用其他部位</li></ul><p style=\"font-weight:700;margin:12px 0 6px;\">Hip 排除：</p><ul><li>手術（關節置換）</li></ul>"}
+        {"id": "pre-schedule", "title": "排程禁忌", "content": "<table><tr><th>檢查類型</th><th>等待時間</th></tr><tr><td>口服顯影劑</td><td>2 天</td></tr><tr><td>靜脈顯影劑（IV contrast）</td><td>2 天</td></tr><tr><td>核醫（Tc99m）</td><td>48–72 小時</td></tr><tr><td>I-131</td><td>一週以上</td></tr><tr><td>鋇劑</td><td>一週以上</td></tr><tr><td>大腸鏡</td><td>不可安排在之後</td></tr></table><div class=\"info-box amber\" style=\"margin-top:10px;\">健檢客戶不嚴格要求上述等待時間<br>身體組成分析需<strong>禁食 4 小時</strong></div>"},
+        {"id": "pre-site", "title": "單 / 多部位", "content": "<div class=\"info-box amber\"><strong>健保單皆為單部位醫令</strong>，一次僅能申報一筆<br>收到兩張健保單 → 擇一部位施做（hip 優先）<br>兩筆健保單申報時間需間隔至少 <strong>兩年</strong></div><ul><li><strong>全身檢查</strong>（醫令 304-109）：常規三部位（腰椎 + 兩側髖部）</li><li>可不用補滿三部位，但須<strong>至少兩個有效部位</strong></li></ul>"},
+        {"id": "pre-age", "title": "年齡 / 經期", "content": "<table><tr><th>條件</th><th>做法</th><th>Score</th></tr><tr><td>男性 ≥ 50歲</td><td>全身 + TBS + FRAX</td><td>T</td></tr><tr><td>女性 停經 / 亂經</td><td>全身 + TBS + FRAX</td><td>T</td></tr><tr><td>男性 &lt; 50歲</td><td>全身</td><td>Z</td></tr><tr><td>女性 未停經</td><td>全身</td><td>Z</td></tr><tr><td>單部位開單</td><td>只做單部位</td><td>依上方</td></tr></table><div class=\"info-box blue\"><strong>女性亂經 = 視為停經</strong>（ISCD：停經過渡期可使用 T-Score）<br>若女性 &gt; 55歲但說未停經 → <strong>寫對話確認</strong></div><ul><li><strong>90歲以上不做</strong> TBS+FRAX</li></ul>"},
+        {"id": "pre-ethnic", "title": "參考族群", "content": "<table><tr><th>Score</th><th>參考族群</th></tr><tr><td>T-Score</td><td>美國白人（NHANES/Lunar）</td></tr><tr><td>Z-Score</td><td>地區資料庫（亞洲）</td></tr></table><div class=\"info-box amber\" style=\"margin-top:12px;\">非亞洲人種 → <strong>確認種族、修改參考族群</strong><br>做完<strong>一定要改回亞洲！</strong>勿改成美國、中國</div><p style=\"font-weight:700;margin:14px 0 8px;\">軟體操作步驟（GE Lunar）：</p><ol class=\"step-ol\"><li>工具 → 用戶和選項</li><li>目錄 → 參考資料</li><li>點選<strong>「腰椎」</strong>→ 參照群體選項 → 選擇族群<br><span style=\"color:var(--accent);font-size:0.9em;\">例：美國 (Lunar)</span></li><li>點選<strong>「股骨」</strong>→ 參照群體選項 → 選擇族群<br><span style=\"color:var(--accent);font-size:0.9em;\">例：美國 (組合 NHANES/Lunar)</span></li><li>關閉選項</li><li>確認修改為目標族群</li><li>按下確定</li><li><strong style=\"color:var(--wrong);\">⚠ 做完記得改回亞洲！</strong></li></ol>"},
+        {"id": "pre-add", "title": "加作規則", "content": "<p style=\"font-weight:700;margin-bottom:8px;\">加作前臂的條件：</p><table><tr><th>情況</th><th>處理</th></tr><tr><td>三部位有<strong>一個</strong>不能分析</td><td>不需加作</td></tr><tr><td><strong>兩個部位無法有效分析</strong></td><td>加做非慣用手</td></tr><tr><td>不確定是否需加作</td><td>就加作</td></tr><tr><td><strong>副甲狀腺亢進</strong></td><td><strong>直接</strong>加做 forearm</td></tr><tr><td><strong>洗腎病人</strong></td><td><strong>直接</strong>加做 forearm</td></tr><tr><td>兩側髖關節置換術</td><td>L-spine + 非慣用手 forearm</td></tr></table><div class=\"info-box blue\" style=\"margin-top:14px;\"><strong>Forearm：</strong>非慣用手（Radius 33%），通常左手<br>若不能執行 → 寫對話註記｜洗腎廔管<strong>可做</strong>但寫對話</div>"}
       ]
     },
     {
-      "group": "position", "groupNum": "二", "groupTitle": "擺位與執行",
+      "group": "during", "groupNum": "二", "groupTitle": "檢查中",
       "cards": [
-        {"id": "position-a", "title": "⑤-a L Spine 擺位", "content": "<ul><li>Spinous process 對<strong>中線</strong></li><li><strong>上緣</strong>：部分 T12/rib 可見（選太多T12 → BMD <strong>低估</strong>）</li><li><strong>下緣</strong>：部分 iliac crest 可見（選到L5 → BMD <strong>高估</strong>）</li><li>至少<strong>兩節可判讀</strong></li></ul><div class=\"info-box amber\"><strong>旋轉（rotation）→ BMD 低估</strong><br>側彎 → 數值會不準</div>"},
-        {"id": "position-b", "title": "⑤-b Femur 擺位", "content": "<div class=\"info-box blue\"><strong>內轉</strong>約 15 度（不是外轉！）<br>小轉子 <strong>隱約可見（just visible）</strong></div><table style=\"margin-top:12px;\"><tr><th>小轉子狀態</th><th>原因</th><th>影響</th></tr><tr><td>太明顯</td><td>內轉不足</td><td>BMD 偏高</td></tr><tr><td>完全不見</td><td>內轉太多</td><td>BMD 偏高（falsely high）</td></tr></table><p style=\"margin-top:10px;font-size:0.9em;color:var(--text2);\">ISCD：選 femoral neck 或 total hip 中<strong>數值較低</strong>的</p>"},
-        {"id": "position-c", "title": "⑤-c 檢查排程禁忌", "content": "<table><tr><th>檢查類型</th><th>等待時間</th></tr><tr><td>口服顯影劑</td><td>2 天</td></tr><tr><td>靜脈顯影劑（IV contrast）</td><td>2 天</td></tr><tr><td>核醫（Tc99m）</td><td>48–72 小時</td></tr><tr><td>I-131</td><td>一週以上</td></tr><tr><td>鋇劑</td><td>一週以上</td></tr><tr><td>大腸鏡</td><td>不可安排在之後</td></tr></table><div class=\"info-box amber\" style=\"margin-top:10px;\">健檢客戶不嚴格要求上述等待時間<br>身體組成分析需<strong>禁食 4 小時</strong></div>"}
+        {"id": "during-spine", "title": "L Spine 擺位", "content": "<ul><li>Spinous process 對<strong>中線</strong></li><li><strong>上緣</strong>：部分 T12/rib 可見（選太多T12 → BMD <strong>低估</strong>）</li><li><strong>下緣</strong>：部分 iliac crest 可見（選到L5 → BMD <strong>高估</strong>）</li><li>至少<strong>兩節可判讀</strong></li></ul><div class=\"info-box amber\"><strong>旋轉（rotation）→ BMD 低估</strong><br>側彎 → 數值會不準</div>"},
+        {"id": "during-hip", "title": "Femur 擺位", "content": "<div class=\"info-box blue\"><strong>內轉</strong>約 15 度（不是外轉！）<br>小轉子 <strong>隱約可見（just visible）</strong></div><table style=\"margin-top:12px;\"><tr><th>小轉子狀態</th><th>原因</th><th>影響</th></tr><tr><td>太明顯</td><td>內轉不足</td><td>BMD 偏高</td></tr><tr><td>完全不見</td><td>內轉太多</td><td>BMD 偏高（falsely high）</td></tr></table><p style=\"margin-top:10px;font-size:0.9em;color:var(--text2);\">ISCD：選 femoral neck 或 total hip 中<strong>數值較低</strong>的</p>"}
       ]
     },
     {
-      "group": "setting", "groupNum": "三", "groupTitle": "報告設定",
+      "group": "post", "groupNum": "三", "groupTitle": "檢查後",
       "cards": [
-        {"id": "setting6", "title": "⑥ Trending", "content": "<div class=\"info-box blue\"><strong>記得做 trending</strong><br><strong>Dual femur（全部）&gt; 單側</strong>（LSC 較小 = 誤差較小）<br>確認報告有<strong>趨勢線折線圖</strong></div><p style=\"font-weight:700;margin:14px 0 8px;\">軟體操作步驟（GE Lunar）：</p><ol class=\"step-ol\"><li>勾選 trending 核取方塊</li><li>點選「報表」下拉選單</li><li>選「(trending DualFemur)(勾選趨勢)雙側股骨」<br><span style=\"color:var(--wrong);font-weight:600;\">⚠ 一定要按「趨勢」按鈕才有折線圖</span></li><li>下拉選單點選<strong>「全部 均值」</strong></li><li>輸出「DualFemur: 全部 均值（骨密度）」</li></ol>"},
-        {"id": "setting7", "title": "⑦ TBS + FRAX", "content": "<table><tr><th>條件</th><th>做法</th></tr><tr><td>男性 ≥ 50歲 / 女性停經/亂經</td><td>做 TBS + FRAX</td></tr><tr><td>男性 &lt; 50歲 / 女性未停經</td><td>不做</td></tr><tr><td><strong>90歲以上</strong></td><td><strong>不做</strong></td></tr><tr><td>L spine 全部排除</td><td><strong>只做 FRAX</strong></td></tr><tr><td>雙側 hip 術後</td><td><strong>只做 TBS</strong></td></tr></table><div class=\"info-box blue\" style=\"margin-top:12px;\">骨強度 = 骨量 BMD（2/3）+ 骨質結構 TBS（1/3）</div><p style=\"font-weight:700;margin:14px 0 8px;\">FRAX 風險因子（詳見附錄）：</p><ul><li>過去骨折史（成年後自發性骨折）</li><li>父母髖骨骨折</li><li>目前吸菸</li><li>類固醇（≥3個月，≥5mg/day）</li><li>類風濕性關節炎</li><li>每日飲酒 ≥ 3 單位</li><li><strong>續發性骨鬆</strong>：糖尿病、甲狀腺亢進、早發停經（&lt;45歲）、慢性肝病、吸收不良</li></ul>"}
+        {"id": "post-exclude", "title": "排除條件", "content": "<p style=\"font-weight:700;margin-bottom:8px;\">L Spine 排除條件：</p><div class=\"info-box amber\">Scan Check 出現時：<strong>先確認「相鄰兩節椎體 T 值差異 &gt; 1.0」再做排除</strong><br><strong>= 1.0 不用排除</strong>，要 &gt; 1.0 才排除</div><ul><li>骨水泥、骨釘</li><li>骨折、結構異常</li><li>若只剩一節可判讀 → 使用其他部位</li></ul><p style=\"font-weight:700;margin:16px 0 8px;\">Hip 排除條件：</p><ul><li>手術（關節置換）</li></ul>"},
+        {"id": "post-trending", "title": "Trending", "content": "<div class=\"info-box blue\"><strong>若有舊片，記得做 trending</strong><br><strong>Dual femur（全部）&gt; 單側</strong>（LSC 較小 = 誤差較小）<br>確認報告有<strong>趨勢線折線圖</strong></div><p style=\"font-weight:700;margin:14px 0 8px;\">軟體操作步驟（GE Lunar）：</p><ol class=\"step-ol\"><li>勾選 trending 核取方塊</li><li>點選「報表」下拉選單</li><li>選「(trending DualFemur)(勾選趨勢)雙側股骨」<br><span style=\"color:var(--wrong);font-weight:600;\">⚠ 一定要按「趨勢」按鈕才有折線圖</span></li><li>下拉選單點選<strong>「全部 均值」</strong></li><li>輸出「DualFemur: 全部 均值（骨密度）」</li></ol>"},
+        {"id": "post-tbs", "title": "TBS + FRAX", "content": "<table><tr><th>條件</th><th>做法</th></tr><tr><td>男性 ≥ 50歲 / 女性停經/亂經</td><td>做 TBS + FRAX</td></tr><tr><td>男性 &lt; 50歲 / 女性未停經</td><td>不做</td></tr><tr><td><strong>90歲以上</strong></td><td><strong>不做</strong></td></tr><tr><td>L spine 全部排除</td><td><strong>只做 FRAX</strong></td></tr><tr><td>雙側 hip 術後</td><td><strong>只做 TBS</strong></td></tr></table><div class=\"info-box blue\" style=\"margin-top:12px;\">骨強度 = 骨量 BMD（2/3）+ 骨質結構 TBS（1/3）</div><p style=\"font-weight:700;margin:14px 0 8px;\">FRAX 風險因子（詳見附錄）：</p><ul><li>過去骨折史（成年後自發性骨折）</li><li>父母髖骨骨折</li><li>目前吸菸</li><li>類固醇（≥3個月，≥5mg/day）</li><li>類風濕性關節炎</li><li>每日飲酒 ≥ 3 單位</li><li><strong>續發性骨鬆</strong>：糖尿病、甲狀腺亢進、早發停經（&lt;45歲）、慢性肝病、吸收不良</li></ul>"},
+        {"id": "post-transfer", "title": "影像傳輸順序", "content": "<div class=\"info-box blue\"><strong>傳輸順序：</strong></div><ol class=\"step-ol\"><li>骨密影像（L-spine、Dual Hip）</li><li>Trending 報告</li><li>TBS + FRAX 報告</li><li>VFA（若有做椎體骨折評估）</li></ol><div class=\"info-box amber\" style=\"margin-top:12px;\">依序傳輸，確保報告完整性</div>"}
       ]
     }
   ],
   "questions": [
-    {"id": 1, "badge": "接單決策 ②", "scenario": "60歲停經女性，來自美國（白人），需做全身 DXA 檢查。", "question": "關於參考族群的設定，下列何者正確？", "options": ["直接使用亞洲族群即可", "L spine 改為美國 Lunar、Hip 改為美國 NHANES/Lunar，做完後改回亞洲", "只需改 Hip 為 NHANES 即可", "不需更改，所有人種都用同一參考值"], "answer": "B", "link": "section-order2", "linkText": "接單 ② 參考族群", "feedback": "非亞洲人須依部位改參考族群：<b>L spine → 美國 Lunar</b>、<b>Hip → 美國 NHANES/Lunar</b>。做完後改回亞洲，避免影響後續病人。"},
-    {"id": 2, "badge": "報告設定 ⑦", "scenario": "78歲停經女性，全身檢查後 L spine 因骨水泥全部排除。", "question": "TBS 與 FRAX 應如何處理？", "options": ["兩者都不做", "只做 FRAX", "兩者都做", "只做 TBS"], "answer": "B", "link": "section-setting7", "linkText": "設定 ⑦ TBS + FRAX", "feedback": "L spine 全部排除 → TBS 無法計算 → <b>只做 FRAX</b>。"},
-    {"id": 3, "badge": "擺位與執行 ⑤-a", "scenario": "L spine 掃描完成，檢視影像如下：", "question": "根據此表格的 T-score，下列何者正確？", "table": true, "options": ["相鄰椎體差異未超過 1.0，皆可採用", "L3 數值異常，應排除", "L4 數值最低，應優先排除", "應該全部排除重做"], "answer": "A", "link": "section-position-a", "linkText": "擺位 ⑤-a L Spine", "feedback": "L2(0.3) 與 L3(−0.3) 差 0.6；L3(−0.3) 與 L4(−1.3) 差 1.0，<b>未超過 1.0</b> 不用排除。排除標準：相鄰椎體 T-score 差異 <b>&gt;1.0</b>。"},
-    {"id": 4, "badge": "接單決策 ③", "scenario": "病人帶來兩張健保單（腰椎、髖部各一張），皆為骨密度檢查。", "question": "正確的處理方式是？", "options": ["兩張都做，分開申報", "請病人改天再來做另一個部位", "擇一部位施做（hip 優先）", "請醫師改開全身檢查單"], "answer": "C", "link": "section-order3", "linkText": "接單 ③ 單/多部位", "feedback": "健保單部位 = <b>擇一做</b>（hip 優先），兩筆申報需間隔兩年。"},
-    {"id": 5, "badge": "擺位與執行 ⑤-c", "scenario": "病人昨天剛做完 CT with contrast，今天安排做 DXA。", "question": "正確的處理方式是？", "options": ["可以直接做，IV contrast 不影響", "需等待 2 天後再做", "需等待一週以上", "請醫師評估是否取消"], "answer": "B", "link": "section-position-c", "linkText": "擺位 ⑤-c 排程禁忌", "feedback": "靜脈顯影劑需等 <b>2 天</b>。"},
-    {"id": 6, "badge": "擺位與執行 ⑤-b", "scenario": "以下三張影像顯示不同程度的股骨內轉：", "question": "關於小轉子的判讀，下列何者正確？", "images": [{"src": "img/hip-overturn.png", "cap": "A"}, {"src": "img/hip-correct.png", "cap": "B"}, {"src": "img/hip-underturn.png", "cap": "C"}], "options": ["A 剛好、B 內轉太多、C 內轉不足", "A 內轉不足須重照、B 剛好、C 可接受", "A 內轉太多須少轉、B 剛好、C 內轉不足須再內轉", "三張都可以接受"], "answer": "C", "link": "section-position-b", "linkText": "擺位 ⑤-b Femur", "feedback": "A 小轉子消失 = 內轉太多；B 隱約可見 = 正確；C 太明顯 = 內轉不足。"},
-    {"id": 7, "badge": "接單決策 ④", "scenario": "三部位 DXA 後，L spine T12-L3 皆有打骨水泥（全部排除）且右側 hip 有人工關節，兩個部位無法有效分析。", "question": "下一步應該？", "options": ["以剩餘左側 hip 判讀即可", "重新掃描有問題的兩個部位", "加做非慣用手前臂（Radius 33%）", "請醫師改開其他檢查"], "answer": "C", "link": "section-order4", "linkText": "接單 ④ 部位選擇", "feedback": "兩個部位無法分析 → <b>加做非慣用手</b>，須至少兩個有效部位。"},
-    {"id": 8, "badge": "接單決策 ①", "scenario": "48歲女性，主訴月經不規則（亂經），來做 DXA 全身檢查。", "question": "關於檢查設定，下列何者正確？", "options": ["亂經未滿一年不算停經，用 Z-Score，不做 TBS+FRAX", "亂經視為停經，執行全身 + TBS + FRAX", "需先抽血確認荷爾蒙數值才能決定", "請醫師確認經期狀態後再執行"], "answer": "B", "link": "section-order1", "linkText": "接單 ① 年齡/經期", "feedback": "ISCD：亂經 = 停經過渡期，應做全身 + TBS + FRAX。「未滿一年不算停經」是常見誤解。"},
-    {"id": 9, "badge": "報告設定 ⑥", "scenario": "60歲病人，兩年前曾做骨密度全身檢查（L spine、R hip、L hip），今日再次回診。", "question": "今日的骨密度報告應包含哪些項目？", "options": ["只做 BMD 三部位即可", "BMD 三部位 + Trending（L spine, Dual femur 頸）+ TBS + FRAX", "BMD 三部位 + Trending（L spine, Dual femur total）+ TBS + FRAX", "BMD 三部位 + TBS + FRAX（無需 trending，兩年才一次）"], "answer": "C", "link": "section-setting6", "linkText": "設定 ⑥ Trending", "feedback": "有前次資料時須做 trending。Dual femur 應選 <b>total（全部均值）</b>，非頸部（頸部僅用於診斷比較）。60歲符合 TBS + FRAX 條件。"},
-    {"id": 10, "badge": "擺位與執行 ⑤-a", "scenario": "以下兩張影像顯示不同的 L-spine 擺位結果：", "question": "關於 L-spine 擺位的判讀，下列何者正確？", "images": [{"src": "img/spine-correct.png", "cap": "A"}, {"src": "img/spine-tilted.png", "cap": "B"}], "options": ["A 正確擺位、B 脊椎太斜須重照", "A 脊椎太斜、B 正確擺位", "兩張都可以接受", "兩張都需要重照"], "answer": "A", "link": "section-position-a", "linkText": "擺位 ⑤-a L Spine", "feedback": "A 脊椎置中且垂直 = 正確；B 脊椎明顯傾斜 = 擺位不正確，須重新調整後再掃描。"}
+    {"id": 1, "badge": "檢查前", "scenario": "60歲停經女性，來自美國（白人），需做全身 DXA 檢查。", "question": "關於參考族群的設定，下列何者正確？", "options": ["直接使用亞洲族群即可", "L spine 改為美國 Lunar、Hip 改為美國 NHANES/Lunar，做完後改回亞洲", "只需改 Hip 為 NHANES 即可", "不需更改，所有人種都用同一參考值"], "answer": "B", "link": "section-pre-ethnic", "feedback": "非亞洲人須依部位改參考族群：<b>L spine → 美國 Lunar</b>、<b>Hip → 美國 NHANES/Lunar</b>。做完後改回亞洲，避免影響後續病人。"},
+    {"id": 2, "badge": "檢查後", "scenario": "78歲停經女性，全身檢查後 L spine 因骨水泥全部排除。", "question": "TBS 與 FRAX 應如何處理？", "options": ["兩者都不做", "只做 FRAX", "兩者都做", "只做 TBS"], "answer": "B", "link": "section-post-tbs", "feedback": "L spine 全部排除 → TBS 無法計算 → <b>只做 FRAX</b>。"},
+    {"id": 3, "badge": "檢查後", "scenario": "L spine 掃描完成，檢視影像如下：", "question": "根據此表格的 T-score，下列何者正確？", "table": true, "options": ["相鄰椎體差異未超過 1.0，皆可採用", "L3 數值異常，應排除", "L4 數值最低，應優先排除", "應該全部排除重做"], "answer": "A", "link": "section-post-exclude", "feedback": "L2(0.3) 與 L3(−0.3) 差 0.6；L3(−0.3) 與 L4(−1.3) 差 1.0，<b>未超過 1.0</b> 不用排除。排除標準：相鄰椎體 T-score 差異 <b>&gt;1.0</b>。"},
+    {"id": 4, "badge": "檢查前", "scenario": "病人帶來兩張健保單（腰椎、髖部各一張），皆為骨密度檢查。", "question": "正確的處理方式是？", "options": ["兩張都做，分開申報", "請病人改天再來做另一個部位", "擇一部位施做（hip 優先）", "請醫師改開全身檢查單"], "answer": "C", "link": "section-pre-site", "feedback": "健保單部位 = <b>擇一做</b>（hip 優先），兩筆申報需間隔兩年。"},
+    {"id": 5, "badge": "檢查前", "scenario": "病人昨天剛做完 CT with contrast，今天安排做 DXA。", "question": "正確的處理方式是？", "options": ["可以直接做，IV contrast 不影響", "需等待 2 天後再做", "需等待一週以上", "請醫師評估是否取消"], "answer": "B", "link": "section-pre-schedule", "feedback": "靜脈顯影劑需等 <b>2 天</b>。"},
+    {"id": 6, "badge": "檢查中", "scenario": "以下三張影像顯示不同程度的股骨內轉：", "question": "關於小轉子的判讀，下列何者正確？", "images": [{"src": "img/hip-overturn.png", "cap": "A"}, {"src": "img/hip-correct.png", "cap": "B"}, {"src": "img/hip-underturn.png", "cap": "C"}], "options": ["A 剛好、B 內轉太多、C 內轉不足", "A 內轉不足須重照、B 剛好、C 可接受", "A 內轉太多須少轉、B 剛好、C 內轉不足須再內轉", "三張都可以接受"], "answer": "C", "link": "section-during-hip", "feedback": "A 小轉子消失 = 內轉太多；B 隱約可見 = 正確；C 太明顯 = 內轉不足。"},
+    {"id": 7, "badge": "檢查前", "scenario": "三部位 DXA 後，L spine T12-L3 皆有打骨水泥（全部排除）且右側 hip 有人工關節，兩個部位無法有效分析。", "question": "下一步應該？", "options": ["以剩餘左側 hip 判讀即可", "重新掃描有問題的兩個部位", "加做非慣用手前臂（Radius 33%）", "請醫師改開其他檢查"], "answer": "C", "link": "section-pre-add", "feedback": "兩個部位無法分析 → <b>加做非慣用手</b>，須至少兩個有效部位。"},
+    {"id": 8, "badge": "檢查前", "scenario": "48歲女性，主訴月經不規則（亂經），來做 DXA 全身檢查。", "question": "關於檢查設定，下列何者正確？", "options": ["亂經未滿一年不算停經，用 Z-Score，不做 TBS+FRAX", "亂經視為停經，執行全身 + TBS + FRAX", "需先抽血確認荷爾蒙數值才能決定", "請醫師確認經期狀態後再執行"], "answer": "B", "link": "section-pre-age", "feedback": "ISCD：亂經 = 停經過渡期，應做全身 + TBS + FRAX。「未滿一年不算停經」是常見誤解。"},
+    {"id": 9, "badge": "檢查後", "scenario": "60歲病人，兩年前曾做骨密度全身檢查（L spine、R hip、L hip），今日再次回診。", "question": "今日的骨密度報告應包含哪些項目？", "options": ["只做 BMD 三部位即可", "BMD 三部位 + Trending（L spine, Dual femur 頸）+ TBS + FRAX", "BMD 三部位 + Trending（L spine, Dual femur total）+ TBS + FRAX", "BMD 三部位 + TBS + FRAX（無需 trending，兩年才一次）"], "answer": "C", "link": "section-post-trending", "feedback": "有前次資料時須做 trending。Dual femur 應選 <b>total（全部均值）</b>，非頸部（頸部僅用於診斷比較）。60歲符合 TBS + FRAX 條件。"},
+    {"id": 10, "badge": "檢查中", "scenario": "以下兩張影像顯示不同的 L-spine 擺位結果：", "question": "關於 L-spine 擺位的判讀，下列何者正確？", "images": [{"src": "img/spine-correct.png", "cap": "A"}, {"src": "img/spine-tilted.png", "cap": "B"}], "options": ["A 正確擺位、B 脊椎太斜須重照", "A 脊椎太斜、B 正確擺位", "兩張都可以接受", "兩張都需要重照"], "answer": "A", "link": "section-during-spine", "feedback": "A 脊椎置中且垂直 = 正確；B 脊椎明顯傾斜 = 擺位不正確，須重新調整後再掃描。"}
   ],
   "appendix": [
     {"id": "A", "title": "骨質疏鬆症基礎", "content": "<p><strong>定義：</strong>一種讓骨骼強度減弱、增加骨折風險的疾病</p><ul><li>40歲後：骨密度每年 −0.5 ~ −1%</li><li>70歲後：每年 −1 ~ −2%</li></ul><p style=\"margin-top:8px;\"><strong>脆弱性骨折：</strong>低衝擊力下骨折（手腕、肱骨、骨盆、脊椎、髖骨）。車禍不算。</p>"},
     {"id": "B", "title": "DXA 原理", "content": "<ul><li><strong>高能量 X 光</strong>：穿透力強（吸收少）</li><li><strong>低能量 X 光</strong>：骨頭吸收多</li><li>所有掃描點 → 2D 圖 → 骨點/非骨點 → 骨質量</li><li>單位：<strong>g/cm²</strong>｜輻射：約 0.001 mSv</li></ul>"},
     {"id": "C", "title": "T-Score 與 Z-Score", "content": "<div class=\"info-box blue\" style=\"font-family:monospace;font-size:0.88em;\">T = (受檢BMD − 年輕參考BMD) / 年輕參考SD<br>Z = (受檢BMD − 同齡參考BMD) / 同齡參考SD</div><table style=\"margin-top:10px;\"><tr><th>T-Score</th><th>診斷</th></tr><tr><td>≥ −1.0</td><td>正常</td></tr><tr><td>−1.0 ~ −2.5</td><td>低骨量（Low bone mass）</td></tr><tr><td>≤ −2.5</td><td>骨質疏鬆（Osteoporosis）</td></tr></table>"},
-    {"id": "D", "title": "TBS 分級標準", "content": "<table><tr><th>TBS</th><th>意義</th></tr><tr><td>&gt; 1.311</td><td>Normal</td></tr><tr><td>1.231 ~ 1.311</td><td>Partially degraded</td></tr><tr><td>≤ 1.231</td><td>Degraded</td></tr></table>"},
-    {"id": "E", "title": "FRAX 風險評估（詳細）", "content": "<p style=\"font-weight:700;margin-bottom:10px;\">FRAX 輸入項目與說明：</p><table><tr><th style=\"width:25%;\">項目</th><th>說明</th></tr><tr><td><strong>年齡</strong></td><td>40-90 歲（超出範圍以邊界值計算）</td></tr><tr><td><strong>性別</strong></td><td>男性 / 女性</td></tr><tr><td><strong>體重</strong></td><td>以公斤輸入</td></tr><tr><td><strong>身高</strong></td><td>以公分輸入</td></tr><tr><td><strong>過去骨折史</strong></td><td>成年後自發性骨折，或健康成年人不會引起骨折的輕微外傷導致的骨折（車禍等高能量外傷不算）</td></tr><tr><td><strong>父母髖骨骨折</strong></td><td>詢問患者父母是否有髖骨骨折病史</td></tr><tr><td><strong>目前吸菸</strong></td><td>目前是否吸菸</td></tr><tr><td><strong>類固醇</strong></td><td>服用 ≥3 個月，劑量 ≥5mg/day Prednisolone（或其他同等劑量類固醇）</td></tr><tr><td><strong>類風濕性關節炎</strong></td><td>確診為類風濕性關節炎</td></tr><tr><td><strong>每日飲酒 ≥3 單位</strong></td><td>1 單位 ≈ 啤酒 285ml、烈酒 30ml、葡萄酒 120ml、開胃酒 60ml</td></tr></table><p style=\"font-weight:700;margin:16px 0 10px;\">續發性骨質疏鬆症：</p><div class=\"info-box amber\">若患者有以下疾病，選擇<strong>「是」</strong>：</div><ul style=\"margin-top:10px;\"><li><strong>糖尿病</strong>（尤其胰島素依賴型）</li><li><strong>成骨不全症</strong>（Osteogenesis Imperfecta）</li><li><strong>長期未治療的甲狀腺機能亢進</strong></li><li><strong>性腺功能低下症</strong></li><li><strong>早發性停經</strong>（小於 45 歲）</li><li><strong>慢性營養不良</strong></li><li><strong>吸收不良症候群</strong>（如乳糜瀉）</li><li><strong>慢性肝臟疾病</strong></li></ul>"}
+    {"id": "D", "title": "TBS 簡介與分級", "content": "<p style=\"font-weight:700;margin-bottom:10px;\">什麼是 TBS？</p><ul><li><strong>BMD</strong>：評估「骨量」（bone quantity）</li><li><strong>TBS</strong>：評估「骨小梁結構」（bone quality）</li></ul><div class=\"info-box blue\" style=\"margin:12px 0;\">TBS 降低 → 骨微結構受損 → 骨折風險上升<br>TBS 可整合至 FRAX 以提升骨折風險預測準確度</div><p style=\"font-weight:700;margin:14px 0 8px;\">TBS 分級標準：</p><table><tr><th>TBS</th><th>意義</th></tr><tr><td>&gt; 1.311</td><td>Normal（正常）</td></tr><tr><td>1.231 ~ 1.311</td><td>Partially degraded（部分劣化）</td></tr><tr><td>≤ 1.231</td><td>Degraded（劣化）</td></tr></table>"},
+    {"id": "E", "title": "FRAX 風險評估（詳細）", "content": "<p style=\"font-weight:700;margin-bottom:10px;\">FRAX 輸入項目與說明：</p><table><tr><th style=\"width:25%;\">項目</th><th>說明</th></tr><tr><td><strong>年齡</strong></td><td>40-90 歲（超出範圍以邊界值計算）</td></tr><tr><td><strong>性別</strong></td><td>男性 / 女性</td></tr><tr><td><strong>體重</strong></td><td>以公斤輸入</td></tr><tr><td><strong>身高</strong></td><td>以公分輸入</td></tr><tr><td><strong>過去骨折史</strong></td><td>成年後自發性骨折，或健康成年人不會引起骨折的輕微外傷導致的骨折（車禍等高能量外傷不算）</td></tr><tr><td><strong>父母髖骨骨折</strong></td><td>詢問患者父母是否有髖骨骨折病史</td></tr><tr><td><strong>目前吸菸</strong></td><td>目前是否吸菸</td></tr><tr><td><strong>類固醇</strong></td><td>服用 ≥3 個月，劑量 ≥5mg/day Prednisolone（或其他同等劑量類固醇）</td></tr><tr><td><strong>類風濕性關節炎</strong></td><td>確診為類風濕性關節炎</td></tr><tr><td><strong>每日飲酒 ≥3 單位</strong></td><td>1 單位 ≈ 啤酒 285ml、烈酒 30ml、葡萄酒 120ml、開胃酒 60ml</td></tr></table><p style=\"font-weight:700;margin:16px 0 10px;\">續發性骨質疏鬆症：</p><div class=\"info-box amber\">若患者有以下疾病，選擇<strong>「是」</strong>：</div><ul style=\"margin-top:10px;\"><li><strong>糖尿病</strong>（尤其胰島素依賴型）</li><li><strong>成骨不全症</strong>（Osteogenesis Imperfecta）</li><li><strong>長期未治療的甲狀腺機能亢進</strong></li><li><strong>性腺功能低下症</strong></li><li><strong>早發性停經</strong>（小於 45 歲）</li><li><strong>慢性營養不良</strong></li><li><strong>吸收不良症候群</strong>（如乳糜瀉）</li><li><strong>慢性肝臟疾病</strong></li></ul>"},
+    {"id": "F", "title": "醫令碼與自費價目", "content": "<table><tr><th>醫令碼</th><th>檢查內容</th><th>自費</th></tr><tr><td>340-109</td><td>骨質密度檢查-全身</td><td>$1,200</td></tr><tr><td>340-114</td><td>骨質密度檢查-三部位+椎體骨折評估</td><td>$1,800</td></tr><tr><td>340-110</td><td>BMD-體脂肪分析</td><td>$1,200</td></tr><tr><td>340-111</td><td>肌少症評估+體脂肪分析</td><td>$1,200</td></tr><tr><td>340-115</td><td>骨質密度檢查-單部位+體脂肪分析</td><td>$1,500</td></tr></table><div class=\"info-box blue\" style=\"margin-top:12px;\"><strong>健保給付條件：</strong>需符合特定適應症，否則為自費項目</div>"},
+    {"id": "G", "title": "輻射劑量比較", "content": "<table><tr><th>檢查</th><th>劑量</th><th>比較</th></tr><tr><td>DXA（骨密度）</td><td>1-5 μSv</td><td>極低（約自然背景輻射 1 天）</td></tr><tr><td>VFA（椎體骨折評估）</td><td>5-25 μSv</td><td>低</td></tr><tr><td>CXR（胸部X光）</td><td>50-100 μSv</td><td>DXA 的 10-50 倍</td></tr><tr><td>L-spine film（腰椎X光）</td><td>1-3 mSv</td><td>DXA 的 100-600 倍</td></tr></table><div class=\"info-box blue\" style=\"margin-top:12px;\"><strong>小知識：</strong>DXA 輻射劑量極低，約等於自然背景輻射一天的量，遠低於傳統 X 光檢查</div>"}
   ]
 }
 </script>
@@ -1535,6 +1532,39 @@ strong { color: var(--accent); }
 // ══ 讀取 JSON 資料 ══
 const DATA = JSON.parse(document.getElementById('app-data').textContent);
 
+// ══ 自動生成 quickNav ══
+const quickNav = DATA.teachSections.map(section => ({
+  group: section.group,
+  groupNum: section.groupNum,
+  groupTitle: section.groupTitle,
+  links: section.cards.map(card => ({
+    id: card.id,
+    label: card.title
+  }))
+}));
+
+// ══ 自動查找 linkText ══
+function getLinkText(link) {
+  // link 格式: "section-pre-age" → 找 id="pre-age" 的卡片標題
+  const cardId = link.replace('section-', '');
+  for (const section of DATA.teachSections) {
+    for (const card of section.cards) {
+      if (card.id === cardId) {
+        return card.title;
+      }
+    }
+  }
+  return '查看教學';
+}
+
+// ══ 從 link 取得 group 名稱 ══
+function getGroupFromLink(link) {
+  const cardId = link.replace('section-', '');
+  // cardId 格式: "pre-age", "during-spine", "post-tbs"
+  const parts = cardId.split('-');
+  return parts[0]; // "pre", "during", "post"
+}
+
 // ══ 全域變數 ══
 const LETTERS = ['A', 'B', 'C', 'D'];
 let shuffledQuestions = [];
@@ -1574,9 +1604,9 @@ function renderTeachPage() {
   });
   html += '</div>';
   
-  // 三欄快速跳轉
+  // 三欄快速跳轉（使用自動生成的 quickNav）
   html += '<div class="qn-columns">';
-  DATA.quickNav.forEach(col => {
+  quickNav.forEach(col => {
     html += '<div class="qn-col">';
     html += '<div class="qn-col-title" onclick="jumpToSection(\'group-' + col.group + '\')">' + col.groupNum + '、' + col.groupTitle + '</div>';
     col.links.forEach(link => {
@@ -1722,8 +1752,9 @@ function renderQ(idx) {
   // Feedback
   if (answered) {
     const ok = results[idx];
+    const linkText = getLinkText(q.link);
     html += '<div class="fb show ' + (ok ? 'ok' : 'nope') + '">' + q.feedback + '<br>';
-    html += '<a class="go-link" href="#" onclick="goTeach(\'' + q.link + '\');return false;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> ' + q.linkText + '</a>';
+    html += '<a class="go-link" href="#" onclick="goTeach(\'' + q.link + '\');return false;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> ' + linkText + '</a>';
     if (idx < QUIZ_COUNT - 1) {
       html += '<button class="skip-btn" onclick="navQ(1)">下一題 →</button>';
     }
@@ -1828,11 +1859,12 @@ function toggleCheatsheet() {
 }
 
 function jumpToSection(id) {
-  // Determine which section contains this element
+  // 從 ID 判斷所屬 group
+  // id 格式: "group-pre", "section-pre-age", "section-during-spine" 等
   let sectionName = null;
-  if (id.includes('order')) sectionName = 'order';
-  else if (id.includes('position')) sectionName = 'position';
-  else if (id.includes('setting')) sectionName = 'setting';
+  if (id.includes('pre')) sectionName = 'pre';
+  else if (id.includes('during')) sectionName = 'during';
+  else if (id.includes('post')) sectionName = 'post';
   
   // Expand the section first
   if (sectionName) {
@@ -1857,7 +1889,6 @@ function jumpToSection(id) {
 function toggleSection(group) {
   document.getElementById('group-' + group).classList.toggle('collapsed');
   document.getElementById('section-' + group).classList.toggle('collapsed');
-  updateToggleAllBtn();
 }
 
 function expandSection(group) {
