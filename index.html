@@ -777,57 +777,121 @@ main {
   padding: 18px 20px;
 }
 
+.qn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
 .qn-label { 
   font-size: 0.75em;
   font-weight: 700;
   color: var(--text2);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 14px;
 }
 
-.qn-group { 
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+.qn-cheatsheet-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 0.8em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.qn-cheatsheet-btn:hover,
+.qn-cheatsheet-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Cheatsheet */
+.qn-cheatsheet {
+  display: none;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+.qn-cheatsheet.open {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.cs-section {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 
-.qn-group:last-child { 
+.cs-section:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
 
-.qn-cat { 
+.cs-title {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.85em;
+  margin-bottom: 4px;
+}
+
+.cs-content {
+  font-size: 0.82em;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Three columns layout */
+.qn-columns {
+  display: flex;
+  gap: 12px;
+}
+
+.qn-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qn-col-title {
   font-size: 0.85em;
   font-weight: 700;
   color: var(--accent);
-  min-width: 110px;
   cursor: pointer;
   padding: 4px 0;
   transition: color 0.2s;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.qn-cat:hover {
+.qn-col-title:hover {
   color: var(--accent-dark);
   text-decoration: underline;
 }
 
 .qn-link {
-  font-size: 0.82em;
-  padding: 5px 12px;
-  border-radius: 20px;
+  font-size: 0.78em;
+  padding: 5px 10px;
+  border-radius: 6px;
   background: var(--accent-light);
   color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
   font-weight: 500;
   transition: all 0.2s;
-  border: 1px solid transparent;
+  text-align: center;
 }
 
 .qn-link:hover { 
@@ -835,19 +899,55 @@ main {
   color: #fff;
 }
 
-/* Horizontal scroll on mobile */
-@media (max-width: 640px) {
-  .qn-group {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-    scrollbar-width: none;
+/* Desktop: horizontal scroll hint */
+@media (min-width: 641px) {
+  .qn-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
-  .qn-group::-webkit-scrollbar { display: none; }
-  .qn-cat { flex-shrink: 0; }
-  .qn-link { flex-shrink: 0; }
+  .qn-col-title {
+    width: 100%;
+  }
+  .qn-link {
+    flex-shrink: 0;
+  }
+}
+
+/* Mobile: vertical stack */
+@media (max-width: 640px) {
+  .quick-nav {
+    padding: 14px 16px;
+  }
+  .qn-columns {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .qn-col {
+    flex: 1;
+    min-width: 0;
+  }
+  .qn-col-title {
+    font-size: 0.75em;
+    text-align: center;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+  .qn-link {
+    font-size: 0.7em;
+    padding: 4px 6px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .qn-cheatsheet {
+    padding: 12px 14px;
+  }
+  .cs-title {
+    font-size: 0.8em;
+  }
+  .cs-content {
+    font-size: 0.75em;
+  }
 }
 
 /* ══ Teaching ══ */
@@ -1369,24 +1469,55 @@ strong { color: var(--accent); }
 
   <!-- Quick Nav -->
   <div class="quick-nav card">
-    <div class="qn-label">快速跳轉</div>
-    <div class="qn-group">
-      <span class="qn-cat" onclick="jumpToSection('group-order')">一 接單決策</span>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-order1');return false;">① 年齡/經期</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-order2');return false;">② 參考族群</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-order3');return false;">③ 單/多部位</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-order4');return false;">④ 部位選擇</a>
+    <div class="qn-header">
+      <div class="qn-label">快速跳轉</div>
+      <button class="qn-cheatsheet-btn" onclick="toggleCheatsheet()">📋 速查</button>
     </div>
-    <div class="qn-group">
-      <span class="qn-cat" onclick="jumpToSection('group-position')">二 擺位與執行</span>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-position-a');return false;">⑤-a L Spine</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-position-b');return false;">⑤-b Femur</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-position-c');return false;">⑤-c 排程禁忌</a>
+    
+    <!-- Cheatsheet (collapsible) -->
+    <div class="qn-cheatsheet" id="cheatsheet">
+      <div class="cs-section">
+        <div class="cs-title">【接單判斷】</div>
+        <div class="cs-content">停經／亂經／男≥50 → 全身 + TBS + FRAX（T-score）<br>未停經／男&lt;50 → 全身（Z-score）<br>90歲以上不做 TBS+FRAX</div>
+      </div>
+      <div class="cs-section">
+        <div class="cs-title">【參考族群】</div>
+        <div class="cs-content">依種族國籍調整<br>例：L-spine 美國白人（Lunar）、Hip 美國白人（NHANES/Lunar）</div>
+      </div>
+      <div class="cs-section">
+        <div class="cs-title">【排除與加作】</div>
+        <div class="cs-content">L-spine：骨水泥／壓迫變形／金屬 → 排除該節<br>Hip：置換術後 → 排除<br>不滿兩部位 → 加做非慣用手前臂</div>
+      </div>
+      <div class="cs-section">
+        <div class="cs-title">【擺位口訣】</div>
+        <div class="cs-content">L-spine：中線對齊、T12-IC、≥2節可判讀<br>Hip：內轉15°、小轉子隱約可見</div>
+      </div>
+      <div class="cs-section">
+        <div class="cs-title">【報告必做】</div>
+        <div class="cs-content">Trending：Dual Femur 全部均值<br>TBS + FRAX：停經女／男≥50<br>L-spine 全排除 → 只做 FRAX<br>雙側 Hip 術後 → 只做 TBS</div>
+      </div>
     </div>
-    <div class="qn-group">
-      <span class="qn-cat" onclick="jumpToSection('group-setting')">三 報告設定</span>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-setting6');return false;">⑥ Trending</a>
-      <a class="qn-link" href="#" onclick="jumpToSection('section-setting7');return false;">⑦ TBS + FRAX</a>
+    
+    <!-- Three columns -->
+    <div class="qn-columns">
+      <div class="qn-col">
+        <div class="qn-col-title" onclick="jumpToSection('group-order')">一、接單決策</div>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-order1');return false;">① 年齡/經期</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-order2');return false;">② 參考族群</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-order3');return false;">③ 單/多部位</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-order4');return false;">④ 部位選擇</a>
+      </div>
+      <div class="qn-col">
+        <div class="qn-col-title" onclick="jumpToSection('group-position')">二、擺位執行</div>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-position-a');return false;">⑤-a 腰椎</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-position-b');return false;">⑤-b 股骨</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-position-c');return false;">⑤-c 排程禁忌</a>
+      </div>
+      <div class="qn-col">
+        <div class="qn-col-title" onclick="jumpToSection('group-setting')">三、報告設定</div>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-setting6');return false;">⑥ Trending</a>
+        <a class="qn-link" href="#" onclick="jumpToSection('section-setting7');return false;">⑦ TBS+FRAX</a>
+      </div>
     </div>
   </div>
 
@@ -1396,7 +1527,7 @@ strong { color: var(--accent); }
     <button class="expand-btn" onclick="collapseAll()">全部收合</button>
   </div>
 
-  <div class="teach-group-title" id="group-order" onclick="toggleSection('order')"><span class="circ">一</span>接單決策<span class="toggle-arrow">▼</span></div>
+  <div class="teach-group-title" id="group-order" onclick="toggleSection('order')"><span class="circ">一</span><span class="group-text">接單決策</span><span class="toggle-arrow">▼</span></div>
   <div class="teach-section" id="section-order">
 
   <div class="teach-card" id="section-order1">
@@ -1496,7 +1627,7 @@ strong { color: var(--accent); }
   </div>
   </div><!-- end section-order -->
 
-  <div class="teach-group-title" id="group-position" onclick="toggleSection('position')"><span class="circ">二</span>擺位與執行<span class="toggle-arrow">▼</span></div>
+  <div class="teach-group-title" id="group-position" onclick="toggleSection('position')"><span class="circ">二</span><span class="group-text">擺位與執行</span><span class="toggle-arrow">▼</span></div>
   <div class="teach-section" id="section-position">
 
   <div class="teach-card" id="section-position-a">
@@ -1551,7 +1682,7 @@ strong { color: var(--accent); }
   </div>
   </div><!-- end section-position -->
 
-  <div class="teach-group-title" id="group-setting" onclick="toggleSection('setting')"><span class="circ">三</span>報告設定<span class="toggle-arrow">▼</span></div>
+  <div class="teach-group-title" id="group-setting" onclick="toggleSection('setting')"><span class="circ">三</span><span class="group-text">報告設定</span><span class="toggle-arrow">▼</span></div>
   <div class="teach-section" id="section-setting">
 
   <div class="teach-card" id="section-setting6">
@@ -2074,6 +2205,14 @@ function goTeach(id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
   }, 150);
+}
+
+// ══ Cheatsheet Toggle ══
+function toggleCheatsheet() {
+  const cs = document.getElementById('cheatsheet');
+  const btn = document.querySelector('.qn-cheatsheet-btn');
+  cs.classList.toggle('open');
+  btn.classList.toggle('active');
 }
 
 // ══ Accordion ══
