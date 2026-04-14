@@ -69,12 +69,44 @@
 
 @media (max-width: 640px) {
   :root {
-    --header-height: auto;
-    --nav-height: 44px;
+    --header-height: 48px;
+    --nav-height: 40px;
   }
   [data-font="small"]  { --font-size: 14px; }
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
+  
+  /* Mobile: Header 單排 */
+  .header-inner {
+    padding: 8px 12px;
+    flex-wrap: nowrap;
+  }
+  .site-title {
+    font-size: 15px;
+  }
+  .site-title::before {
+    width: 4px;
+    height: 18px;
+  }
+  .font-controls {
+    padding: 2px;
+  }
+  .ctrl-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  
+  /* Mobile: Nav 縮小 */
+  .nav-tab {
+    padding: 8px 0;
+    font-size: 14px;
+  }
 }
 
 /* ══ Reset ══ */
@@ -1142,6 +1174,54 @@ strong { color: var(--accent); }
     opacity: 1;
   }
 }
+
+/* ══ Back to Quiz Button ══ */
+.back-to-quiz {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  padding: 12px 20px;
+  border-radius: 25px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-quiz.visible {
+  opacity: 0.9;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-quiz:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@media (max-width: 640px) {
+  .back-to-quiz {
+    bottom: 16px;
+    left: 16px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  .back-to-quiz.visible {
+    opacity: 0.85;
+  }
+}
 </style>
 </head>
 <body data-theme="light" data-font="medium">
@@ -1224,18 +1304,18 @@ strong { color: var(--accent); }
     <div class="qn-group">
       <span class="qn-cat" onclick="jumpTo('group-order')">一 接單決策</span>
       <a class="qn-link" href="#" onclick="jumpTo('section-order1');return false;">① 年齡/經期</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order2');return false;">② 單/多部位</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-order3');return false;">③ 部位選擇</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-order2');return false;">② 參考族群</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-order3');return false;">③ 單/多部位</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-order4');return false;">④ 部位選擇</a>
     </div>
     <div class="qn-group">
       <span class="qn-cat" onclick="jumpTo('group-position')">二 擺位與執行</span>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-a');return false;">④-a L Spine</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-b');return false;">④-b Femur</a>
-      <a class="qn-link" href="#" onclick="jumpTo('section-position-c');return false;">④-c 排程禁忌</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-position-a');return false;">⑤-a L Spine</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-position-b');return false;">⑤-b Femur</a>
+      <a class="qn-link" href="#" onclick="jumpTo('section-position-c');return false;">⑤-c 排程禁忌</a>
     </div>
     <div class="qn-group">
       <span class="qn-cat" onclick="jumpTo('group-setting')">三 報告設定</span>
-      <a class="qn-link" href="#" onclick="jumpTo('section-setting5');return false;">⑤ 參考族群</a>
       <a class="qn-link" href="#" onclick="jumpTo('section-setting6');return false;">⑥ Trending</a>
       <a class="qn-link" href="#" onclick="jumpTo('section-setting7');return false;">⑦ TBS + FRAX</a>
     </div>
@@ -1265,7 +1345,35 @@ strong { color: var(--accent); }
   </div>
 
   <div class="teach-card" id="section-order2">
-    <div class="teach-card-head">② 單 / 多部位</div>
+    <div class="teach-card-head">② 參考族群</div>
+    <div class="teach-card-body">
+      <table>
+        <tr><th>Score</th><th>參考族群</th></tr>
+        <tr><td>T-Score</td><td>美國白人（NHANES/Lunar）</td></tr>
+        <tr><td>Z-Score</td><td>地區資料庫（亞洲）</td></tr>
+      </table>
+      <div class="info-box amber" style="margin-top:12px;">
+        非亞洲人種 → <strong>確認種族、修改參考族群</strong><br>
+        做完<strong>一定要改回亞洲！</strong>勿改成美國、中國
+      </div>
+      <p style="font-weight:700;margin:14px 0 8px;">軟體操作步驟（GE Lunar）：</p>
+      <ol class="step-ol">
+        <li>工具 → 用戶和選項</li>
+        <li>目錄 → 參考資料</li>
+        <li>點選<strong>「腰椎」</strong>→ 參照群體選項 → 選擇族群<br>
+          <span style="color:var(--accent);font-size:0.9em;">例：美國 (Lunar)</span></li>
+        <li>點選<strong>「股骨」</strong>→ 參照群體選項 → 選擇族群<br>
+          <span style="color:var(--accent);font-size:0.9em;">例：美國 (組合 NHANES/Lunar)</span></li>
+        <li>關閉選項</li>
+        <li>確認修改為目標族群</li>
+        <li>按下確定</li>
+        <li><strong style="color:var(--wrong);">⚠ 做完記得改回亞洲！</strong></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="teach-card" id="section-order3">
+    <div class="teach-card-head">③ 單 / 多部位</div>
     <div class="teach-card-body">
       <div class="info-box amber">
         <strong>健保單皆為單部位醫令</strong>，一次僅能申報一筆<br>
@@ -1279,8 +1387,8 @@ strong { color: var(--accent); }
     </div>
   </div>
 
-  <div class="teach-card" id="section-order3">
-    <div class="teach-card-head">③ 部位選擇與加作規則</div>
+  <div class="teach-card" id="section-order4">
+    <div class="teach-card-head">④ 部位選擇與加作規則</div>
     <div class="teach-card-body">
       <p style="font-weight:700;margin-bottom:8px;">加作前臂的條件：</p>
       <table>
@@ -1314,7 +1422,7 @@ strong { color: var(--accent); }
   <div class="teach-group-title" id="group-position"><span class="circ">二</span>擺位與執行</div>
 
   <div class="teach-card" id="section-position-a">
-    <div class="teach-card-head">④-a L Spine 擺位</div>
+    <div class="teach-card-head">⑤-a L Spine 擺位</div>
     <div class="teach-card-body">
       <ul>
         <li>Spinous process 對<strong>中線</strong></li>
@@ -1330,7 +1438,7 @@ strong { color: var(--accent); }
   </div>
 
   <div class="teach-card" id="section-position-b">
-    <div class="teach-card-head">④-b Femur 擺位</div>
+    <div class="teach-card-head">⑤-b Femur 擺位</div>
     <div class="teach-card-body">
       <div class="info-box blue">
         <strong>內轉</strong>約 15 度（不是外轉！）<br>
@@ -1346,7 +1454,7 @@ strong { color: var(--accent); }
   </div>
 
   <div class="teach-card" id="section-position-c">
-    <div class="teach-card-head">④-c 檢查排程禁忌</div>
+    <div class="teach-card-head">⑤-c 檢查排程禁忌</div>
     <div class="teach-card-body">
       <table>
         <tr><th>檢查類型</th><th>等待時間</th></tr>
@@ -1365,34 +1473,6 @@ strong { color: var(--accent); }
   </div>
 
   <div class="teach-group-title" id="group-setting"><span class="circ">三</span>報告設定</div>
-
-  <div class="teach-card" id="section-setting5">
-    <div class="teach-card-head">⑤ 參考族群</div>
-    <div class="teach-card-body">
-      <table>
-        <tr><th>Score</th><th>參考族群</th></tr>
-        <tr><td>T-Score</td><td>美國白人（NHANES/Lunar）</td></tr>
-        <tr><td>Z-Score</td><td>地區資料庫（亞洲）</td></tr>
-      </table>
-      <div class="info-box amber" style="margin-top:12px;">
-        非亞洲人種 → <strong>確認種族、修改參考族群</strong><br>
-        做完<strong>一定要改回亞洲！</strong>勿改成美國、中國
-      </div>
-      <p style="font-weight:700;margin:14px 0 8px;">軟體操作步驟（GE Lunar）：</p>
-      <ol class="step-ol">
-        <li>工具 → 用戶和選項</li>
-        <li>目錄 → 參考資料</li>
-        <li>點選<strong>「腰椎」</strong>→ 參照群體選項 → 選擇族群<br>
-          <span style="color:var(--accent);font-size:0.9em;">例：美國 (Lunar)</span></li>
-        <li>點選<strong>「股骨」</strong>→ 參照群體選項 → 選擇族群<br>
-          <span style="color:var(--accent);font-size:0.9em;">例：美國 (組合 NHANES/Lunar)</span></li>
-        <li>關閉選項</li>
-        <li>確認修改為目標族群</li>
-        <li>按下確定</li>
-        <li><strong style="color:var(--wrong);">⚠ 做完記得改回亞洲！</strong></li>
-      </ol>
-    </div>
-  </div>
 
   <div class="teach-card" id="section-setting6">
     <div class="teach-card-head">⑥ Trending</div>
@@ -1428,6 +1508,16 @@ strong { color: var(--accent); }
       <div class="info-box blue" style="margin-top:12px;">
         骨強度 = 骨量 BMD（2/3）+ 骨質結構 TBS（1/3）
       </div>
+      <p style="font-weight:700;margin:14px 0 8px;">FRAX 風險因子（詳見附錄）：</p>
+      <ul>
+        <li>過去骨折史（成年後自發性骨折）</li>
+        <li>父母髖骨骨折</li>
+        <li>目前吸菸</li>
+        <li>類固醇（≥3個月，≥5mg/day）</li>
+        <li>類風濕性關節炎</li>
+        <li>每日飲酒 ≥ 3 單位</li>
+        <li><strong>續發性骨鬆</strong>：第一型糖尿病、甲狀腺亢進、早發停經（&lt;45歲）、慢性肝病、吸收不良</li>
+      </ul>
     </div>
   </div>
 
@@ -1485,18 +1575,37 @@ strong { color: var(--accent); }
     </table>
   </div></div>
 
-  <div class="acc"><button class="acc-btn" onclick="togAcc(this)"><span>E｜FRAX 風險評估</span><span class="arr">▼</span></button>
+  <div class="acc"><button class="acc-btn" onclick="togAcc(this)"><span>E｜FRAX 風險評估（詳細）</span><span class="arr">▼</span></button>
   <div class="acc-body">
-    <p style="font-weight:700;margin-bottom:6px;">風險因子：</p>
-    <ol>
-      <li>過去骨折史（輕微外力，車禍不算）</li>
-      <li>父母髖骨骨折</li>
-      <li>吸菸</li>
-      <li>類固醇使用</li>
-      <li>類風濕性關節炎</li>
-      <li>次發性骨鬆</li>
-      <li>每日酒精 ≥ 3 單位</li>
-    </ol>
+    <p style="font-weight:700;margin-bottom:10px;">FRAX 輸入項目與說明：</p>
+    <table>
+      <tr><th style="width:25%;">項目</th><th>說明</th></tr>
+      <tr><td><strong>年齡</strong></td><td>40-90 歲（超出範圍以邊界值計算）</td></tr>
+      <tr><td><strong>性別</strong></td><td>男性 / 女性</td></tr>
+      <tr><td><strong>體重</strong></td><td>以公斤輸入</td></tr>
+      <tr><td><strong>身高</strong></td><td>以公分輸入</td></tr>
+      <tr><td><strong>過去骨折史</strong></td><td>成年後自發性骨折，或健康成年人不會引起骨折的輕微外傷導致的骨折（車禍等高能量外傷不算）</td></tr>
+      <tr><td><strong>父母髖骨骨折</strong></td><td>詢問患者父母是否有髖骨骨折病史</td></tr>
+      <tr><td><strong>目前吸菸</strong></td><td>目前是否吸菸</td></tr>
+      <tr><td><strong>類固醇</strong></td><td>服用 ≥3 個月，劑量 ≥5mg/day Prednisolone（或其他同等劑量類固醇）</td></tr>
+      <tr><td><strong>類風濕性關節炎</strong></td><td>確診為類風濕性關節炎</td></tr>
+      <tr><td><strong>每日飲酒 ≥3 單位</strong></td><td>1 單位 ≈ 啤酒 285ml、烈酒 30ml、葡萄酒 120ml、開胃酒 60ml</td></tr>
+    </table>
+    
+    <p style="font-weight:700;margin:16px 0 10px;">續發性骨質疏鬆症：</p>
+    <div class="info-box amber">
+      若患者有以下疾病，選擇<strong>「是」</strong>：
+    </div>
+    <ul style="margin-top:10px;">
+      <li><strong>第一型糖尿病</strong>（胰島素依賴型）</li>
+      <li><strong>成骨不全症</strong>（Osteogenesis Imperfecta）</li>
+      <li><strong>長期未治療的甲狀腺機能亢進</strong></li>
+      <li><strong>性腺功能低下症</strong></li>
+      <li><strong>早發性停經</strong>（小於 45 歲）</li>
+      <li><strong>慢性營養不良</strong></li>
+      <li><strong>吸收不良症候群</strong>（如乳糜瀉）</li>
+      <li><strong>慢性肝臟疾病</strong></li>
+    </ul>
   </div></div>
 
 </div>
@@ -1506,8 +1615,8 @@ strong { color: var(--accent); }
 <script>
 // ══ Questions (will be shuffled) ══
 const ALL_QUESTIONS = [
-  { id:1, badge:'報告設定 ⑤', scenario:'60歲停經女性，來自美國（白人），需做全身 DXA 檢查。',
-    text:'關於參考族群的設定，下列何者正確？', ans:'B', link:'section-setting5', linkText:'設定 ⑤ 參考族群',
+  { id:1, badge:'接單決策 ②', scenario:'60歲停經女性，來自美國（白人），需做全身 DXA 檢查。',
+    text:'關於參考族群的設定，下列何者正確？', ans:'B', link:'section-order2', linkText:'接單 ② 參考族群',
     opts:['直接使用亞洲族群即可','L spine 改為美國 Lunar、Hip 改為美國 NHANES/Lunar，做完後改回亞洲','只需改 Hip 為 NHANES 即可','不需更改，所有人種都用同一參考值'],
     fb:'非亞洲人須依部位改參考族群：<b>L spine → 美國 Lunar</b>、<b>Hip → 美國 NHANES/Lunar</b>。做完後改回亞洲，避免影響後續病人。' },
 
@@ -1516,29 +1625,29 @@ const ALL_QUESTIONS = [
     opts:['兩者都不做','只做 FRAX','兩者都做','只做 TBS'],
     fb:'L spine 全部排除 → TBS 無法計算 → <b>只做 FRAX</b>。' },
 
-  { id:3, badge:'擺位與執行 ④-a', scenario:'L spine 掃描完成，檢視影像如下：', table:true,
-    text:'根據此表格的 T-score，下列何者正確？', ans:'A', link:'section-position-a', linkText:'擺位 ④-a L Spine',
-    opts:['L1/L2 與 L3 相差超過 1.0，L3 應排除','所有椎體皆可採用','L4 數值最低，應優先排除','應該全部排除重做'],
-    fb:'L2(0.3) 與 L3(−0.3) 差 0.6；L3(−0.3) 與 L4(−1.3) 差 <b>1.0</b>，不用排除（要 &gt;1.0 才排）。但 L1/L2 與 L3 的組合要看相鄰！' },
+  { id:3, badge:'擺位與執行 ⑤-a', scenario:'L spine 掃描完成，檢視影像如下：', table:true,
+    text:'根據此表格的 T-score，下列何者正確？', ans:'A', link:'section-position-a', linkText:'擺位 ⑤-a L Spine',
+    opts:['相鄰椎體差異未超過 1.0，皆可採用','L3 數值異常，應排除','L4 數值最低，應優先排除','應該全部排除重做'],
+    fb:'L2(0.3) 與 L3(−0.3) 差 0.6；L3(−0.3) 與 L4(−1.3) 差 1.0，<b>未超過 1.0</b> 不用排除。排除標準：相鄰椎體 T-score 差異 <b>&gt;1.0</b>。' },
 
-  { id:4, badge:'接單決策 ②', scenario:'病人帶來兩張健保單（腰椎、髖部各一張），皆為骨密度檢查。',
-    text:'正確的處理方式是？', ans:'C', link:'section-order2', linkText:'接單 ② 單/多部位',
+  { id:4, badge:'接單決策 ③', scenario:'病人帶來兩張健保單（腰椎、髖部各一張），皆為骨密度檢查。',
+    text:'正確的處理方式是？', ans:'C', link:'section-order3', linkText:'接單 ③ 單/多部位',
     opts:['兩張都做，分開申報','請病人改天再來做另一個部位','擇一部位施做（hip 優先）','請醫師改開全身檢查單'],
     fb:'健保單部位 = <b>擇一做</b>（hip 優先），兩筆申報需間隔兩年。' },
 
-  { id:5, badge:'擺位與執行 ④-c', scenario:'病人昨天剛做完 CT with contrast，今天安排做 DXA。',
-    text:'正確的處理方式是？', ans:'B', link:'section-position-c', linkText:'擺位 ④-c 排程禁忌',
+  { id:5, badge:'擺位與執行 ⑤-c', scenario:'病人昨天剛做完 CT with contrast，今天安排做 DXA。',
+    text:'正確的處理方式是？', ans:'B', link:'section-position-c', linkText:'擺位 ⑤-c 排程禁忌',
     opts:['可以直接做，IV contrast 不影響','需等待 2 天後再做','需等待一週以上','請醫師評估是否取消'],
     fb:'靜脈顯影劑需等 <b>2 天</b>。' },
 
-  { id:6, badge:'擺位與執行 ④-b', scenario:'以下三張影像顯示不同程度的股骨內轉：',
+  { id:6, badge:'擺位與執行 ⑤-b', scenario:'以下三張影像顯示不同程度的股骨內轉：',
     images:[{src:'img/hip-overturn.png',cap:'A'},{src:'img/hip-correct.png',cap:'B'},{src:'img/hip-underturn.png',cap:'C'}],
-    text:'關於小轉子的判讀，下列何者正確？', ans:'C', link:'section-position-b', linkText:'擺位 ④-b Femur',
+    text:'關於小轉子的判讀，下列何者正確？', ans:'C', link:'section-position-b', linkText:'擺位 ⑤-b Femur',
     opts:['A 剛好、B 內轉太多、C 內轉不足','A 內轉不足須重照、B 剛好、C 可接受','A 內轉太多須少轉、B 剛好、C 內轉不足須再內轉','三張都可以接受'],
     fb:'A 小轉子消失 = 內轉太多；B 隱約可見 = 正確；C 太明顯 = 內轉不足。'},
 
-  { id:7, badge:'接單決策 ③', scenario:'三部位 DXA 後，L spine 有骨水泥且右側 hip 有人工關節，兩個部位無法有效分析。',
-    text:'下一步應該？', ans:'C', link:'section-order3', linkText:'接單 ③ 加作規則',
+  { id:7, badge:'接單決策 ④', scenario:'三部位 DXA 後，L spine T12-L3 皆有打骨水泥（全部排除）且右側 hip 有人工關節，兩個部位無法有效分析。',
+    text:'下一步應該？', ans:'C', link:'section-order4', linkText:'接單 ④ 部位選擇',
     opts:['以剩餘左側 hip 判讀即可','重新掃描有問題的兩個部位','加做非慣用手前臂（Radius 33%）','請醫師改開其他檢查'],
     fb:'兩個部位無法分析 → <b>加做非慣用手</b>，須至少兩個有效部位。'},
 
@@ -1552,9 +1661,9 @@ const ALL_QUESTIONS = [
     opts:['只做 BMD 三部位即可','BMD 三部位 + Trending（L spine, Dual femur 頸）+ TBS + FRAX','BMD 三部位 + Trending（L spine, Dual femur total）+ TBS + FRAX','BMD 三部位 + TBS + FRAX（無需 trending，兩年才一次）'],
     fb:'有前次資料時須做 trending。Dual femur 應選 <b>total（全部均值）</b>，非頸部（頸部僅用於診斷比較）。60歲符合 TBS + FRAX 條件。'},
 
-  { id:10, badge:'擺位與執行 ④-a', scenario:'以下兩張影像顯示不同的 L-spine 擺位結果：',
+  { id:10, badge:'擺位與執行 ⑤-a', scenario:'以下兩張影像顯示不同的 L-spine 擺位結果：',
     images:[{src:'img/spine-correct.png',cap:'A'},{src:'img/spine-tilted.png',cap:'B'}],
-    text:'關於 L-spine 擺位的判讀，下列何者正確？', ans:'A', link:'section-position-a', linkText:'擺位 ④-a L Spine',
+    text:'關於 L-spine 擺位的判讀，下列何者正確？', ans:'A', link:'section-position-a', linkText:'擺位 ⑤-a L Spine',
     opts:['A 正確擺位、B 脊椎太斜須重照','A 脊椎太斜、B 正確擺位','兩張都可以接受','兩張都需要重照'],
     fb:'A 脊椎置中且垂直 = 正確；B 脊椎明顯傾斜 = 擺位不正確，須重新調整後再掃描。'}
 ];
@@ -1579,8 +1688,8 @@ function shuffle(array) {
 
 // ══ Start Quiz ══
 function startQuiz() {
-  // Shuffle all questions
-  shuffledQuestions = shuffle(ALL_QUESTIONS);
+  // Shuffle and pick QUIZ_COUNT questions
+  shuffledQuestions = shuffle(ALL_QUESTIONS).slice(0, QUIZ_COUNT);
   results = new Array(QUIZ_COUNT).fill(null);
   userChoices = new Array(QUIZ_COUNT).fill(null);
   cur = 0;
@@ -1613,6 +1722,7 @@ function jumpToQuestion(idx) {
 // ══ Render question ══
 function renderQ(idx) {
   cur = idx;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   const q = shuffledQuestions[idx];
   const c = document.getElementById('q-container');
 
@@ -1787,6 +1897,7 @@ function jumpTo(id) {
 }
 
 function goTeach(id) {
+  showBackToQuiz(cur);
   go('teach', document.querySelectorAll('.nav-tab')[0]);
   setTimeout(() => {
     const el = document.getElementById(id);
@@ -1851,12 +1962,40 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ══ Back to Quiz Button ══
+let returnToQuizIdx = null;
+
+function showBackToQuiz(idx) {
+  returnToQuizIdx = idx;
+  const btn = document.getElementById('backToQuiz');
+  if (btn) btn.classList.add('visible');
+}
+
+function hideBackToQuiz() {
+  returnToQuizIdx = null;
+  const btn = document.getElementById('backToQuiz');
+  if (btn) btn.classList.remove('visible');
+}
+
+function backToQuiz() {
+  if (returnToQuizIdx !== null) {
+    go('quiz', document.querySelectorAll('.nav-tab')[1]);
+    setTimeout(() => {
+      renderQ(returnToQuizIdx);
+      hideBackToQuiz();
+    }, 100);
+  }
+}
+
 // Initialize back to top button after DOM ready
 document.addEventListener('DOMContentLoaded', initBackToTop);
 </script>
 
 <!-- Back to Top Button -->
 <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="回到頂部">↑</button>
+
+<!-- Back to Quiz Button -->
+<button class="back-to-quiz" id="backToQuiz" onclick="backToQuiz()">← 返回測驗</button>
 
 </body>
 </html>
