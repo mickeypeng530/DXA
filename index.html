@@ -69,44 +69,34 @@
 
 @media (max-width: 768px) {
   :root {
-    --header-height: 48px;
-    --nav-height: 42px;
+    --header-height: 40px;
+    --nav-height: 38px;
   }
   [data-font="small"]  { --font-size: 14px; }
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
   
-  /* Header 強制單排不換行 */
+  /* Header 單排 */
   .header-inner {
     flex-wrap: nowrap !important;
-    flex-direction: row !important;
     padding: 6px 10px !important;
-    gap: 6px !important;
+    gap: 8px !important;
   }
   
-  /* 標題縮小 */
+  /* 標題保持可見 */
   .site-title {
-    font-size: 13px !important;
-    flex-shrink: 1;
-    min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
   }
   
   .site-title::before {
     width: 3px !important;
     height: 14px !important;
-    flex-shrink: 0;
   }
   
-  /* 控制項不縮小 */
-  .controls {
-    flex-shrink: 0 !important;
-  }
-  
+  /* 控制項 */
   .font-controls {
     padding: 2px !important;
-    gap: 1px !important;
   }
   
   .ctrl-btn {
@@ -115,13 +105,12 @@
   }
   
   .theme-btn {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: 13px !important;
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 12px !important;
     margin-left: 3px !important;
   }
   
-  /* Nav Tab 縮小 */
   .nav-tab {
     padding: 8px 0;
     font-size: 13px;
@@ -152,9 +141,10 @@ body {
 header {
   background: var(--card);
   border-bottom: 1px solid var(--border);
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   box-shadow: var(--shadow);
 }
@@ -253,9 +243,10 @@ header {
 nav {
   background: var(--card);
   border-bottom: 1px solid var(--border);
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
   top: var(--header-height);
+  left: 0;
+  right: 0;
   z-index: 99;
 }
 
@@ -294,6 +285,7 @@ main {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px 16px 100px;
+  padding-top: calc(var(--header-height) + var(--nav-height) + 20px);
 }
 
 .page { display: none; animation: fadeIn 0.3s ease; }
