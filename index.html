@@ -827,8 +827,8 @@ main {
 }
 
 .cs-section {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px dashed var(--border);
 }
 
@@ -842,7 +842,7 @@ main {
   font-weight: 700;
   color: var(--accent);
   font-size: 0.85em;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .cs-content {
@@ -851,17 +851,37 @@ main {
   line-height: 1.6;
 }
 
-/* Three columns layout */
+.cs-item {
+  display: block;
+  padding-left: 0.9em;
+  text-indent: -0.9em;
+}
+
+.cs-item::before {
+  content: '•';
+  margin-right: 0.2em;
+  color: var(--accent);
+}
+
+/* Desktop: 三列橫向（原本設計）*/
 .qn-columns {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .qn-col {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.qn-col:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .qn-col-title {
@@ -871,9 +891,7 @@ main {
   cursor: pointer;
   padding: 4px 0;
   transition: color 0.2s;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 8px;
-  margin-bottom: 4px;
+  min-width: 100px;
 }
 
 .qn-col-title:hover {
@@ -882,16 +900,15 @@ main {
 }
 
 .qn-link {
-  font-size: 0.78em;
-  padding: 5px 10px;
-  border-radius: 6px;
+  font-size: 0.82em;
+  padding: 5px 12px;
+  border-radius: 20px;
   background: var(--accent-light);
   color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
   font-weight: 500;
   transition: all 0.2s;
-  text-align: center;
 }
 
 .qn-link:hover { 
@@ -899,22 +916,7 @@ main {
   color: #fff;
 }
 
-/* Desktop: horizontal scroll hint */
-@media (min-width: 641px) {
-  .qn-col {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-  .qn-col-title {
-    width: 100%;
-  }
-  .qn-link {
-    flex-shrink: 0;
-  }
-}
-
-/* Mobile: vertical stack */
+/* Mobile: 三欄直排 */
 @media (max-width: 640px) {
   .quick-nav {
     padding: 14px 16px;
@@ -925,19 +927,26 @@ main {
   }
   .qn-col {
     flex: 1;
+    flex-direction: column;
     min-width: 0;
+    padding-bottom: 0;
+    border-bottom: none;
   }
   .qn-col-title {
-    font-size: 0.75em;
+    font-size: 0.72em;
     text-align: center;
+    min-width: auto;
+    width: 100%;
     padding-bottom: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
   }
   .qn-link {
-    font-size: 0.7em;
+    font-size: 0.68em;
     padding: 4px 6px;
-    border-radius: 4px;
+    border-radius: 6px;
     text-align: center;
+    width: 100%;
   }
   .qn-cheatsheet {
     padding: 12px 14px;
@@ -946,7 +955,8 @@ main {
     font-size: 0.8em;
   }
   .cs-content {
-    font-size: 0.75em;
+    font-size: 0.72em;
+    line-height: 1.7;
   }
 }
 
@@ -1478,23 +1488,42 @@ strong { color: var(--accent); }
     <div class="qn-cheatsheet" id="cheatsheet">
       <div class="cs-section">
         <div class="cs-title">【接單判斷】</div>
-        <div class="cs-content">停經／亂經／男≥50 → 全身 + TBS + FRAX（T-score）<br>未停經／男&lt;50 → 全身（Z-score）<br>90歲以上不做 TBS+FRAX</div>
+        <div class="cs-content">
+          <span class="cs-item">停經／亂經／男≥50 → 全身 + TBS + FRAX（T-score）</span>
+          <span class="cs-item">未停經／男&lt;50 → 全身（Z-score）</span>
+          <span class="cs-item">90歲以上不做 TBS+FRAX</span>
+        </div>
       </div>
       <div class="cs-section">
         <div class="cs-title">【參考族群】</div>
-        <div class="cs-content">依種族國籍調整<br>例：L-spine 美國白人（Lunar）、Hip 美國白人（NHANES/Lunar）</div>
+        <div class="cs-content">
+          <span class="cs-item">依種族國籍調整</span>
+          <span class="cs-item">例：L-spine 美國白人（Lunar）、Hip 美國白人（NHANES/Lunar）</span>
+        </div>
       </div>
       <div class="cs-section">
         <div class="cs-title">【排除與加作】</div>
-        <div class="cs-content">L-spine：骨水泥／壓迫變形／金屬 → 排除該節<br>Hip：置換術後 → 排除<br>不滿兩部位 → 加做非慣用手前臂</div>
+        <div class="cs-content">
+          <span class="cs-item">L-spine：骨水泥／壓迫變形／金屬 → 排除該節</span>
+          <span class="cs-item">Hip：置換術後 → 排除</span>
+          <span class="cs-item">不滿兩部位 → 加做非慣用手前臂</span>
+        </div>
       </div>
       <div class="cs-section">
         <div class="cs-title">【擺位口訣】</div>
-        <div class="cs-content">L-spine：中線對齊、T12-IC、≥2節可判讀<br>Hip：內轉15°、小轉子隱約可見</div>
+        <div class="cs-content">
+          <span class="cs-item">L-spine：中線對齊、T12-IC、≥2節可判讀</span>
+          <span class="cs-item">Hip：內轉15°、小轉子隱約可見</span>
+        </div>
       </div>
       <div class="cs-section">
         <div class="cs-title">【報告必做】</div>
-        <div class="cs-content">Trending：Dual Femur 全部均值<br>TBS + FRAX：停經女／男≥50<br>L-spine 全排除 → 只做 FRAX<br>雙側 Hip 術後 → 只做 TBS</div>
+        <div class="cs-content">
+          <span class="cs-item">Trending：Dual Femur 全部均值</span>
+          <span class="cs-item">TBS + FRAX：停經女／男≥50</span>
+          <span class="cs-item">L-spine 全排除 → 只做 FRAX</span>
+          <span class="cs-item">雙側 Hip 術後 → 只做 TBS</span>
+        </div>
       </div>
     </div>
     
