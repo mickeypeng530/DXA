@@ -69,65 +69,39 @@
 
 @media (max-width: 768px) {
   :root {
-    --header-height: 44px;
-    --nav-height: 36px;
+    --header-height: 48px;
+    --nav-height: 42px;
   }
   [data-font="small"]  { --font-size: 14px; }
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
   
-  /* Mobile: Header 單排 - 強制不換行 */
-  body header .header-inner {
-    padding: 6px 10px;
-    flex-wrap: nowrap !important;
-    gap: 4px;
-    max-height: 44px;
-  }
-  body header .header-inner .site-title {
-    font-size: 12px !important;
-    white-space: nowrap;
-    flex-shrink: 1;
-    min-width: 0;
-    overflow: hidden;
-    gap: 4px;
-  }
-  body header .header-inner .site-title::before {
-    width: 3px !important;
-    height: 14px !important;
-    min-width: 3px;
-    flex-shrink: 0;
-  }
-  body header .header-inner .controls {
-    flex-shrink: 0;
-  }
-  body header .header-inner .font-controls {
-    padding: 1px;
-    gap: 0;
-  }
-  body header .header-inner .ctrl-btn {
-    padding: 2px 4px;
-    font-size: 9px;
-    min-width: 18px;
-  }
-  body header .header-inner .theme-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 11px;
-    margin-left: 2px;
-    min-width: 24px;
-    padding: 0;
+  /* 標題縮小但可見 */
+  .site-title {
+    font-size: 14px;
   }
   
-  /* Mobile: Nav 縮小高度 */
-  nav {
-    top: 44px; /* match header height */
+  .site-title::before {
+    width: 4px;
+    height: 16px;
   }
-  nav .nav-inner {
-    padding: 0 4px;
+  
+  /* 控制項縮小 */
+  .ctrl-btn {
+    padding: 4px 8px;
+    font-size: 11px;
   }
-  nav .nav-tab {
-    padding: 6px 0;
-    font-size: 12px;
+  
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  /* Nav Tab 縮小 */
+  .nav-tab {
+    padding: 10px 0;
+    font-size: 13px;
   }
 }
 
@@ -165,6 +139,15 @@ header {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+/* 手機版 Header 不換行 */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-wrap: nowrap;
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 .site-title {
