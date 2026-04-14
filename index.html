@@ -67,7 +67,7 @@
 [data-font="medium"] { --font-size: 17px; }
 [data-font="large"]  { --font-size: 21px; }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :root {
     --header-height: 48px;
     --nav-height: 40px;
@@ -76,41 +76,48 @@
   [data-font="medium"] { --font-size: 16px; }
   [data-font="large"]  { --font-size: 19px; }
   
-  /* Mobile: Header 單排 */
-  .header-inner {
-    padding: 6px 10px !important;
-    flex-wrap: nowrap !important;
-    gap: 6px !important;
+  /* Mobile: Header 單排 - 強制不換行 */
+  header .header-inner {
+    padding: 6px 10px;
+    flex-wrap: nowrap;
+    gap: 4px;
   }
-  .site-title {
-    font-size: 14px !important;
-    white-space: nowrap;
-  }
-  .site-title::before {
-    width: 3px;
-    height: 16px;
-    min-width: 3px;
-  }
-  .font-controls {
-    padding: 2px;
-    gap: 1px;
-  }
-  .ctrl-btn {
-    padding: 4px 6px;
-    font-size: 11px;
-  }
-  .theme-btn {
-    width: 28px;
-    height: 28px;
+  header .site-title {
     font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  header .site-title::before {
+    width: 3px;
+    height: 14px;
+    min-width: 3px;
+    flex-shrink: 0;
+  }
+  header .controls {
+    flex-shrink: 0;
+  }
+  header .font-controls {
+    padding: 2px;
+    gap: 0;
+  }
+  header .ctrl-btn {
+    padding: 3px 5px;
+    font-size: 10px;
+  }
+  header .theme-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
     margin-left: 2px;
-    min-width: 28px;
+    min-width: 26px;
   }
   
   /* Mobile: Nav 縮小 */
   .nav-tab {
     padding: 8px 0;
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
@@ -1792,9 +1799,11 @@ function jumpToQuestion(idx) {
 }
 
 // ══ Render question ══
-function renderQ(idx) {
+function renderQ(idx, shouldScroll = false) {
   cur = idx;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (shouldScroll) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   const q = shuffledQuestions[idx];
   const c = document.getElementById('q-container');
 
@@ -1893,7 +1902,7 @@ function pick(qIdx, optIdx) {
 
 function navQ(dir) {
   const next = cur + dir;
-  if (next >= 0 && next < QUIZ_COUNT) renderQ(next);
+  if (next >= 0 && next < QUIZ_COUNT) renderQ(next, true);
 }
 
 // ══ Summary ══
