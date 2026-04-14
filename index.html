@@ -1500,9 +1500,9 @@ strong { color: var(--accent); }
 <!-- ══ Nav ══ -->
 <nav>
   <div class="nav-inner">
-    <button class="nav-tab" onclick="showPage('teach')">📖 教學</button>
-    <button class="nav-tab" onclick="showPage('quiz')">✏️ 測驗</button>
-    <button class="nav-tab" onclick="showPage('extra')">📚 附錄</button>
+    <button class="nav-tab" onclick="showPage('teach')">教學</button>
+    <button class="nav-tab" onclick="showPage('quiz')">測驗</button>
+    <button class="nav-tab" onclick="showPage('extra')">附錄</button>
   </div>
 </nav>
 
@@ -1817,12 +1817,22 @@ function toggleCheatsheet() {
 }
 
 function jumpToSection(id) {
-  const groupMatch = id.match(/^(group-|section-)(order|position|setting)/);
-  if (groupMatch) expandSection(groupMatch[2]);
-  setTimeout(() => {
+  // Determine which section contains this element
+  let sectionName = null;
+  if (id.includes('order')) sectionName = 'order';
+  else if (id.includes('position')) sectionName = 'position';
+  else if (id.includes('setting')) sectionName = 'setting';
+  
+  // Expand the section first
+  if (sectionName) {
+    expandSection(sectionName);
+  }
+  
+  // Then scroll to the element (longer delay to ensure expansion complete)
+  setTimeout(function() {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 150);
 }
 
 function toggleSection(group) {
