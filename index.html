@@ -70,6 +70,92 @@
 }
 </script>
 <style>
+/* ══ Password Screen ══ */
+.password-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.password-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: var(--shadow3);
+}
+
+.password-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.password-box h2 {
+  color: var(--accent);
+  font-size: 1.4em;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.password-box p {
+  color: var(--text2);
+  font-size: 0.95em;
+  margin-bottom: 24px;
+}
+
+.password-input-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.password-input-wrap input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.password-input-wrap input:focus {
+  border-color: var(--accent);
+}
+
+.password-input-wrap button {
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.password-input-wrap button:hover {
+  background: var(--accent-dark);
+}
+
+.password-error {
+  color: var(--wrong);
+  font-size: 0.9em;
+  margin-top: 12px;
+  min-height: 1.2em;
+}
+
 /* ══ Color Tokens ══ */
 :root {
   --bg: #f8fafc;
@@ -1478,6 +1564,23 @@ strong { color: var(--accent); }
 </head>
 <body data-theme="dark" data-font="medium">
 
+<!-- ══ Password Screen ══ -->
+<div id="passwordScreen" class="password-screen">
+  <div class="password-box">
+    <div class="password-icon">🔐</div>
+    <h2>DXA 骨質密度檢查</h2>
+    <p>放射師教學工具</p>
+    <div class="password-input-wrap">
+      <input type="password" id="passwordInput" placeholder="請輸入密碼" maxlength="10" onkeypress="if(event.key==='Enter')checkPassword()">
+      <button onclick="checkPassword()">進入</button>
+    </div>
+    <div id="passwordError" class="password-error"></div>
+  </div>
+</div>
+
+<!-- ══ Main App (hidden until password verified) ══ -->
+<div id="mainApp" style="display:none;">
+
 <!-- ══ Confirm Dialog ══ -->
 <div class="overlay" id="confirmOverlay">
   <div class="dialog">
@@ -1525,10 +1628,72 @@ strong { color: var(--accent); }
 <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
 <button class="back-to-quiz" id="backToQuiz" onclick="backToQuiz()">← 返回測驗</button>
 
+</div><!-- End of mainApp -->
+
 <!-- ══════════════════════════════════════════════════════════════
      🔧 JavaScript 邏輯區
 ═══════════════════════════════════════════════════════════════ -->
 <script>
+// ══ SHA-256 Hash 函數 ══
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+// ══ 密碼 Hash（2482 的 SHA-256）══
+const PASSWORD_HASH = 'c54bb57fd7bb6c99a8cb4556806b7a8a18773abe7df48d84e933a40f69e65860';
+
+// ══ 密碼驗證 ══
+async function checkPassword() {
+  const input = document.getElementById('passwordInput').value;
+  const errorEl = document.getElementById('passwordError');
+  
+  if (!input) {
+    errorEl.textContent = '請輸入密碼';
+    return;
+  }
+  
+  const inputHash = await sha256(input);
+  
+  if (inputHash === PASSWORD_HASH) {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    sessionStorage.setItem('dxa_auth', 'true');
+    initApp();
+  } else {
+    errorEl.textContent = '密碼錯誤';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+// ══ 檢查是否已驗證（本次瀏覽階段）══
+function checkAuth() {
+  if (sessionStorage.getItem('dxa_auth') === 'true') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('passwordInput').focus();
+  }
+}
+
+// ══ 初始化應用程式 ══
+function initApp() {
+  renderTeachPage();
+  renderQuizPage();
+  renderAppendixPage();
+  showPage('teach');
+  initTeachSections();
+  window.addEventListener('scroll', handleScroll);
+}
+
+// ══ 頁面載入時檢查驗證狀態 ══
+document.addEventListener('DOMContentLoaded', checkAuth);
+
 // ══ 讀取 JSON 資料 ══
 const DATA = JSON.parse(document.getElementById('app-data').textContent);
 
@@ -1574,16 +1739,6 @@ let userChoices = [];
 let quizStarted = false;
 let cameFromQuiz = false;
 let returnToQuestion = 0;
-
-// ══ 初始化 ══
-document.addEventListener('DOMContentLoaded', function() {
-  renderTeachPage();
-  renderQuizPage();
-  renderAppendixPage();
-  showPage('teach');
-  initTeachSections();
-  window.addEventListener('scroll', handleScroll);
-});
 
 // ══ 渲染教學頁 ══
 function renderTeachPage() {
